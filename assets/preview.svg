@@ -1,0 +1,22 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- background -->
+  <rect width="1200" height="630" fill="black"/>
+
+  <!-- logo -->
+
+  <g transform="translate(500,120)">
+    <path d="M0 80 A100 100 0 0 1 200 80 L0 80 Z" fill="white"/>
+    <path d="M20 160 A80 80 0 0 1 180 160 L20 160 Z" fill="white"/>
+    <circle cx="100" cy="240" r="50" fill="#bfff00"/>
+  </g>
+
+  <!-- text -->
+
+  <text x="100" y="520" fill="white" font-size="48" font-family="monospace">
+    indway
+  </text>
+
+  <text x="100" y="570" fill="#888" font-size="28" font-family="monospace">
+    tools from the lab
+  </text>
+</svg>
