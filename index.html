@@ -1,94 +1,1179 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>indway — AI-driven Solution Architect</title>
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="indway adalah personal lab untuk membangun AI tools dan produk digital dari kebutuhan nyata. sederhana, jujur, dan bisa langsung dipakai."
+    />
+    <meta name="author" content="indway" />
 
-<title>indway — tools from the lab</title>
+    <!-- Open Graph -->
+    <meta property="og:title" content="indway — AI-driven Solution Architect" />
+    <meta property="og:description" content="AI-driven Solution Architect" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://indway.github.io" />
+    <meta
+      property="og:image"
+      content="https://indway.github.io/assets/preview.svg"
+    />
 
-<meta name="description" content="indway adalah personal lab untuk membangun tools dan produk digital dari kebutuhan nyata. sederhana, jujur, dan bisa langsung dipakai.">
-<meta name="author" content="indway">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="indway — tools from the lab" />
+    <meta
+      name="twitter:description"
+      content="tools & produk digital dari eksperimen nyata. build useful things."
+    />
+    <meta
+      name="twitter:image"
+      content="https://indway.github.io/assets/preview.svg"
+    />
 
-<!-- Open Graph -->
-<meta property="og:title" content="indway — tools from the lab">
-<meta property="og:description" content="tools & produk digital dari eksperimen nyata. build useful things.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://indway.github.io">
-<meta property="og:image" content="https://indway.github.io/assets/preview.svg">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.svg" />
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="indway — tools from the lab">
-<meta name="twitter:description" content="tools & produk digital dari eksperimen nyata. build useful things.">
-<meta name="twitter:image" content="https://indway.github.io/assets/preview.svg">
+    <!-- Theme -->
+    <meta name="theme-color" content="#ffffff" />
 
-<!-- Favicon -->
-<link rel="icon" href="assets/favicon.svg">
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap");
 
-<!-- Theme -->
-<meta name="theme-color" content="#ffffff">
+      :root {
+        --bg: #fff;
+        --fg: #111;
+        --muted: #999;
+        --border: #e8e8e8;
+        --hover-bg: #f5f5f5;
+        --font: "JetBrains Mono", monospace;
+      }
+      [data-theme="dark"] {
+        --bg: #0c0c0c;
+        --fg: #dedede;
+        --muted: #484848;
+        --border: #1e1e1e;
+        --hover-bg: #141414;
+      }
 
-<style>
-    body {
+      *,
+      *::before,
+      *::after {
         margin: 0;
-        padding: 40px;
-        background: #ffffff;
-        color: #111;
-        font-family: monospace;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--font);
         font-size: 20px;
-        line-height: 1.7;
-        white-space: pre;
-    }
+        line-height: 1.85;
+        transition:
+          background 0.35s,
+          color 0.35s;
+        overflow-x: hidden;
+      }
 
-    small {
-        color: #666;
-        font-size: 0.8em;
-    }
+      /* ── TOPBAR ── */
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 300;
+        display: flex;
+        align-items: center;
+        padding: 0 56px;
+        height: 60px;
+        background: var(--bg);
+        border-bottom: 1px solid transparent;
+        transition:
+          border-color 0.3s,
+          background 0.35s;
+      }
+      .topbar.scrolled {
+        border-color: var(--border);
+      }
 
-    strong {
+      .topbar-logo {
+        font-size: 22px;
         font-weight: 700;
-    }
-</style>
+        letter-spacing: -0.03em;
+        margin-right: auto;
+        opacity: 0;
+        transform: translateX(-8px);
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+        pointer-events: none;
+      }
+      .topbar-logo.show {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+      .topbar-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 0.8em;
+        background: var(--fg);
+        vertical-align: middle;
+        margin-left: 2px;
+        animation: blink 1s step-end infinite;
+      }
 
-</head>
+      .topbar-right {
+        display: flex;
+        gap: 6px;
+      }
 
-<body>
-hai,
-<strong>indway</strong> disini.
-tertarik lebih lanjut? email saya di <a href="mailto:indway@duck.com">indway@duck.com</a>
-<small>(we are open to collaboration or project) start at $45 per hour ;-)</small> 
+      .ctrl {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: var(--font);
+        font-size: 12px;
+        letter-spacing: 0.07em;
+        padding: 5px 13px;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.2s;
+      }
+      .ctrl:hover {
+        color: var(--fg);
+        border-color: var(--fg);
+      }
+      .ctrl.active {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
 
-Produk yang telah dimasak di-lab :
-* ViGen <small>(Video Generator With AI)</small>
-* GenSu <small>(Si Pembuat Surat)</small>
-* Content Intelligence System <small>(Pembuat Konten Berdasarkan Insight)</small>
-* Indexer <small>(Otomatis Indexing Website)</small>
-* 1826d <small>(Catatan Perjalanan Hidup)</small> 
-* lihatmami <small>(Steganography Stuf)</small> / art journey at <a href="https://www.instagram.com/kodekeras.jpg" target="_blank">kodekeras.jpg</a>
-* jadicms <small>(Git Based Content Hub & Media Management)</small>
+      /* ── WRAP full width with padding ── */
+      .wrap {
+        padding: 0 56px;
+      }
 
-Web yang sedang dikelola :
-* <a href="https://schlab.id" target="_blank">schlab.id</a> <small>(School as Living Lab)</small>
-* <a href="https://jadi.pw" target="_blank">jadi.pw</a> <small>(Digital Product Marketplace & Productivity Tools)</small>
-  * <a href="https://kampung.jadi.pw" target="_blank">kampung.jadi.pw</a> <small>(Digitalisasi Warga Desa)</small>
-  * <a href="https://refleksi.jadi.pw" target="_blank">refleksi.jadi.pw</a> <small>(Ruang Introspeksi Diri)</small>
-* <a href="https://society.kodekeras.my.id" target="_blank">KodeKeras Society*</a> <small>(Productivity Tracking)</small>
+      @media (max-width: 700px) {
+        .topbar {
+          padding: 0 22px;
+          height: 52px;
+        }
+        .wrap {
+          padding: 0 22px;
+        }
+        .ctrl {
+          font-size: 11px;
+          padding: 4px 9px;
+        }
+      }
 
-lihat juga dekstop saya di <a href="https://kodekeras.my.id" target="_blank">kodekeras.my.id</a>
-atau versi <a href="https://kodekeras.my.id/mobile" target="_blank">mobilenya</a>   
+      /* ── SECTIONS ── */
+      section {
+        padding: 110px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      section:last-of-type {
+        border-bottom: none;
+      }
 
-Side-Project :
-* <a href="https://instagram.com/monstroku" target="_blank">monstroku</a> <small>(a universe project imajinasi dan kolaborasi ayah dan anak)</small>
+      /* ── HERO ── */
+      .hero {
+        padding-top: 150px;
+        padding-bottom: 110px;
+      }
 
-Theme Web : 
-* ./pentest <small>(blog template for hacker notes)</small>
-* Sekolahku <small>(web template for school)</small>
+      .hero-pre {
+        font-size: 15px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        margin-bottom: 32px;
+        opacity: 0;
+        animation: up 0.5s ease forwards 0.05s;
+      }
 
-Cybersecurity Tools : 
-* BeterCut <small>(Alternatif Netcut)</small>
-* Rp <small>(a spying tools)</small>
+      .hero-name {
+        font-size: clamp(88px, 12vw, 160px);
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        line-height: 0.95;
+        margin-bottom: 28px;
+        opacity: 0;
+        animation: up 0.55s ease forwards 0.15s;
+      }
+      .hero-cursor {
+        display: inline-block;
+        width: 0.065em;
+        height: 0.82em;
+        background: var(--fg);
+        vertical-align: middle;
+        margin-left: 4px;
+        animation: blink 1s step-end infinite;
+      }
 
-</body>
+      .hero-tagline {
+        font-size: clamp(20px, 2.5vw, 34px);
+        color: var(--muted);
+        font-weight: 300;
+        opacity: 0;
+        animation: up 0.55s ease forwards 0.28s;
+      }
+
+      .hero-body {
+        margin-top: 56px;
+        font-size: clamp(17px, 1.6vw, 22px);
+        opacity: 0;
+        animation: up 0.55s ease forwards 0.42s;
+        line-height: 2.1;
+      }
+      .hero-body a {
+        color: var(--fg);
+        text-underline-offset: 5px;
+        text-decoration-color: var(--border);
+        transition: text-decoration-color 0.2s;
+      }
+      .hero-body a:hover {
+        text-decoration-color: var(--fg);
+      }
+
+      .hero-rate {
+        font-size: clamp(14px, 1.1vw, 17px);
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      .hero-rate .amount {
+        color: var(--fg);
+        font-weight: 700;
+      }
+
+      /* ── SECTION LABEL ── */
+      .sec-label {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 44px;
+      }
+
+      /* ── PRODUCT LIST with showcase ── */
+      .plist-wrap {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 0 48px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .plist-wrap {
+          grid-template-columns: 1fr;
+        }
+        .showcase-panel {
+          display: none;
+        }
+      }
+
+      .plist {
+        list-style: none;
+      }
+
+      .plist li {
+        display: flex;
+        align-items: baseline;
+        gap: clamp(14px, 2vw, 32px);
+        padding: clamp(18px, 2vw, 26px) 0;
+        border-bottom: 1px solid var(--border);
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+          opacity 0.45s,
+          transform 0.45s;
+        cursor: default;
+      }
+      .plist li:first-child {
+        border-top: 1px solid var(--border);
+      }
+      .plist li.in {
+        opacity: 1;
+        transform: none;
+      }
+      .plist li:hover .pname {
+        opacity: 0.25;
+      }
+      .plist li:hover .pdesc {
+        color: var(--fg);
+      }
+      .plist li.active .pname {
+        opacity: 0.25;
+      }
+
+      .pname {
+        font-size: clamp(30px, 4.5vw, 60px);
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+        flex-shrink: 0;
+        transition: opacity 0.2s;
+      }
+      .pname a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .pdesc {
+        font-size: clamp(14px, 1.3vw, 18px);
+        color: var(--muted);
+        transition: color 0.2s;
+        line-height: 1.5;
+      }
+      .pdesc a {
+        color: inherit;
+      }
+
+      /* ── SHOWCASE PANEL ── */
+      .showcase-panel {
+        position: sticky;
+        top: 80px;
+        height: 300px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+        background: var(--hover-bg);
+      }
+
+      .showcase-slot {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.35s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .showcase-slot.active {
+        opacity: 1;
+      }
+      .showcase-slot.default {
+        opacity: 1;
+      }
+
+      .showcase-slot video,
+      .showcase-slot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .showcase-default-text {
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* ── WEB CARDS ── */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid var(--border);
+      }
+      @media (max-width: 700px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        padding: clamp(24px, 3vw, 44px);
+        border-right: 1px solid var(--border);
+        text-decoration: none;
+        color: var(--fg);
+        display: block;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          background 0.2s,
+          opacity 0.45s,
+          transform 0.45s;
+      }
+      .card:last-child {
+        border-right: none;
+      }
+      .card.in {
+        opacity: 1;
+        transform: none;
+      }
+      .card:hover {
+        background: var(--hover-bg);
+      }
+
+      @media (max-width: 700px) {
+        .card {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+        .card:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .card-name {
+        font-size: clamp(20px, 2.5vw, 32px);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      .card-desc {
+        font-size: clamp(14px, 1.2vw, 17px);
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .card-subs {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .sub-link {
+        text-decoration: none;
+        display: block;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+      .sub-link:hover {
+        color: var(--fg);
+      }
+      .sub-link::before {
+        content: "↳ ";
+      }
+      .sub-link-name {
+        font-size: clamp(14px, 1.2vw, 17px);
+        font-weight: 700;
+      }
+      .sub-link-desc {
+        font-size: clamp(12px, 1vw, 14px);
+        display: block;
+        margin-left: 18px;
+        line-height: 1.4;
+      }
+
+      .desktop-links {
+        margin-top: 24px;
+        font-size: clamp(14px, 1.2vw, 17px);
+        color: var(--muted);
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      .desktop-links.in {
+        opacity: 1;
+        transform: none;
+      }
+      .desktop-links a {
+        color: var(--fg);
+        text-underline-offset: 4px;
+        text-decoration-color: var(--border);
+        transition: text-decoration-color 0.2s;
+      }
+      .desktop-links a:hover {
+        text-decoration-color: var(--fg);
+      }
+
+      /* ── SOCIALS ── */
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .social-pill {
+        font-size: clamp(14px, 1.2vw, 17px);
+        color: var(--muted);
+        text-decoration: none;
+        border: 1px solid var(--border);
+        padding: clamp(9px, 1vw, 13px) clamp(18px, 2vw, 28px);
+        border-radius: 2px;
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          all 0.2s,
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      .social-pill.in {
+        opacity: 1;
+        transform: none;
+      }
+      .social-pill:hover {
+        color: var(--bg);
+        background: var(--fg);
+        border-color: var(--fg);
+      }
+
+      .footer-note {
+        margin-top: 56px;
+        font-size: clamp(13px, 1vw, 15px);
+        color: var(--muted);
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.4s,
+          transform 0.4s;
+      }
+      .footer-note.in {
+        opacity: 1;
+        transform: none;
+      }
+
+      @keyframes up {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar" id="topbar">
+      <div class="topbar-logo" id="topbar-logo">
+        indway<span class="topbar-cursor"></span>
+      </div>
+      <div class="topbar-right">
+        <button class="ctrl lang-btn active" data-lang="id">ID</button>
+        <button class="ctrl lang-btn" data-lang="en">EN</button>
+        <button class="ctrl lang-btn" data-lang="ms">MY</button>
+        <button class="ctrl lang-btn" data-lang="ar">AR</button>
+        <button class="ctrl" id="themeBtn">dark</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <!-- HERO -->
+      <section class="hero" id="hero-section">
+        <div class="hero-pre">indway@lab ~ %</div>
+        <div class="hero-name">indway<span class="hero-cursor"></span></div>
+        <div class="hero-tagline" data-i18n="tagline"></div>
+        <div class="hero-body">
+          <span data-i18n="greeting"></span> <strong>indway</strong>
+          <span data-i18n="here"></span><br />
+          <span data-i18n="contact_pre"></span>
+          <a href="mailto:indway@duck.com">indway@duck.com</a><br />
+          <div class="hero-rate" id="hero-rate"></div>
+        </div>
+      </section>
+
+      <!-- PRODUK -->
+      <section>
+        <div class="sec-label" data-i18n="sec_products"></div>
+        <div class="plist-wrap">
+          <ul class="plist" id="list-produk"></ul>
+          <div class="showcase-panel" id="showcase-panel">
+            <div class="showcase-slot default" id="showcase-default">
+              <div
+                class="showcase-default-text"
+                data-i18n="showcase_hint"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WEB -->
+      <section>
+        <div class="sec-label" data-i18n="sec_web"></div>
+        <div class="cards-grid" id="web-cards"></div>
+        <div class="desktop-links" id="desktop-links">
+          <span data-i18n="also_see"></span> →
+          <a href="https://kodekeras.my.id" target="_blank">kodekeras.my.id</a>
+          ·
+          <a
+            href="https://kodekeras.my.id/mobile"
+            target="_blank"
+            data-i18n="mobile_ver"
+          ></a>
+        </div>
+      </section>
+
+      <!-- LAINNYA -->
+      <section>
+        <div class="sec-label" data-i18n="sec_side"></div>
+        <ul class="plist" id="list-side"></ul>
+        <div
+          class="sec-label"
+          style="margin-top: 80px"
+          data-i18n="sec_themes"
+        ></div>
+        <ul class="plist" id="list-themes"></ul>
+        <div
+          class="sec-label"
+          style="margin-top: 80px"
+          data-i18n="sec_cyber"
+        ></div>
+        <ul class="plist" id="list-cyber"></ul>
+      </section>
+
+      <!-- FOOTER -->
+      <section>
+        <div class="sec-label" data-i18n="sec_find"></div>
+        <div class="socials" id="socials"></div>
+        <div class="footer-note" id="footer-note">
+          indway · build useful things.
+        </div>
+      </section>
+    </div>
+
+    <script>
+      /* ── RATE per currency ── */
+      const RATES = {
+        id: {
+          symbol: "Rp",
+          amount: "750.000",
+          unit: "jam",
+          note: "(perkiraan, tergantung proyek)",
+        },
+        en: { symbol: "$", amount: "45", unit: "hr", note: "(negotiable)" },
+        ms: {
+          symbol: "RM",
+          amount: "210",
+          unit: "jam",
+          note: "(boleh dirunding)",
+        },
+        ar: { symbol: "$", amount: "45", unit: "hr", note: "(قابل للتفاوض)" },
+      };
+
+      /* ── DATA ── */
+      const DATA = {
+        products: [
+          {
+            name: "ViGen",
+            desc: {
+              id: "Video Generator With AI",
+              en: "Video Generator With AI",
+              ms: "Penjana Video Dengan AI",
+              ar: "مولّد فيديو بالذكاء الاصطناعي",
+            },
+            // showcase: put real URLs here — using placeholder animated SVGs for demo
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80",
+            },
+          },
+          {
+            name: "GenSu",
+            desc: {
+              id: "Si Pembuat Surat",
+              en: "Letter & Document Generator",
+              ms: "Penjana Surat & Dokumen",
+              ar: "منشئ الرسائل والوثائق",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80",
+            },
+          },
+          {
+            name: "Content Intelligence",
+            desc: {
+              id: "Pembuat Konten Berdasarkan Insight",
+              en: "Insight-Based Content Generator",
+              ms: "Penjana Kandungan Berasaskan Insight",
+              ar: "إنشاء محتوى مبني على البيانات",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+            },
+          },
+          {
+            name: "Indexer",
+            desc: {
+              id: "Otomatis Indexing Website",
+              en: "Automatic Website Indexer",
+              ms: "Pengindeks Laman Web Automatik",
+              ar: "أداة فهرسة المواقع التلقائية",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
+            },
+          },
+          {
+            name: "1826d",
+            desc: {
+              id: "Catatan Perjalanan Hidup",
+              en: "Life Journey Journal",
+              ms: "Jurnal Perjalanan Hidup",
+              ar: "يوميات رحلة الحياة",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80",
+            },
+          },
+          {
+            name: "lihatmami",
+            desc: {
+              id: "Steganography · art <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
+              en: "Steganography · art <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
+              ms: "Steganografi · seni <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
+              ar: "إخفاء البيانات · <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80",
+            },
+          },
+          {
+            name: "jadicms",
+            desc: {
+              id: "Git Based Content Hub & Media Management",
+              en: "Git-Based Content Hub & Media Management",
+              ms: "Hab Kandungan Berasaskan Git",
+              ar: "إدارة المحتوى والوسائط عبر Git",
+            },
+            media: {
+              type: "img",
+              src: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&q=80",
+            },
+          },
+        ],
+        websites: [
+          {
+            name: "schlab.id",
+            url: "https://schlab.id",
+            desc: {
+              id: "School as Living Lab",
+              en: "School as Living Lab",
+              ms: "Sekolah sebagai Makmal Hidup",
+              ar: "المدرسة كمختبر حي",
+            },
+            subs: [],
+          },
+          {
+            name: "jadi.pw",
+            url: "https://jadi.pw",
+            desc: {
+              id: "Digital Product Marketplace & Productivity Tools",
+              en: "Digital Product Marketplace & Productivity Tools",
+              ms: "Pasaran Produk Digital & Alat Produktiviti",
+              ar: "سوق المنتجات الرقمية",
+            },
+            subs: [
+              {
+                name: "kampung.jadi.pw",
+                url: "https://kampung.jadi.pw",
+                desc: {
+                  id: "Digitalisasi Warga Desa",
+                  en: "Village Community Digitalization",
+                  ms: "Pendigitalan Komuniti Kampung",
+                  ar: "رقمنة المجتمعات القروية",
+                },
+              },
+              {
+                name: "refleksi.jadi.pw",
+                url: "https://refleksi.jadi.pw",
+                desc: {
+                  id: "Ruang Introspeksi Diri",
+                  en: "Self-Reflection Space",
+                  ms: "Ruang Refleksi Diri",
+                  ar: "فضاء التأمل الذاتي",
+                },
+              },
+            ],
+          },
+          {
+            name: "KodeKeras Society",
+            url: "https://society.kodekeras.my.id",
+            desc: {
+              id: "Productivity Tracking",
+              en: "Productivity Tracking",
+              ms: "Penjejak Produktiviti",
+              ar: "تتبع الإنتاجية",
+            },
+            subs: [],
+          },
+        ],
+        side: [
+          {
+            name: "monstroku",
+            url: "https://instagram.com/monstroku",
+            desc: {
+              id: "universe project · imajinasi dan kolaborasi ayah dan anak",
+              en: "universe project · imagination & father-son collaboration",
+              ms: "projek semesta · imaginasi & kolaborasi ayah dan anak",
+              ar: "مشروع كوني · تعاون بين الأب والابن",
+            },
+          },
+        ],
+        themes: [
+          {
+            name: "./pentest",
+            desc: {
+              id: "blog template for hacker notes",
+              en: "blog template for hacker notes",
+              ms: "templat blog penggodam",
+              ar: "قالب مدونة للهاكر",
+            },
+          },
+          {
+            name: "Sekolahku",
+            desc: {
+              id: "web template for school",
+              en: "web template for school",
+              ms: "templat web sekolah",
+              ar: "قالب موقع للمدارس",
+            },
+          },
+        ],
+        cyber: [
+          {
+            name: "BeterCut",
+            desc: {
+              id: "Alternatif Netcut",
+              en: "Netcut Alternative",
+              ms: "Alternatif Netcut",
+              ar: "بديل Netcut",
+            },
+          },
+          {
+            name: "Rp",
+            desc: {
+              id: "a spying tools",
+              en: "a spying tool",
+              ms: "alat pengintipan",
+              ar: "أداة تجسس",
+            },
+          },
+        ],
+        socials: [
+          { label: "email", url: "mailto:indway@duck.com" },
+          { label: "instagram", url: "https://instagram.com/monstroku" },
+          {
+            label: "@kodekeras.jpg",
+            url: "https://instagram.com/kodekeras.jpg",
+          },
+          { label: "kodekeras.my.id", url: "https://kodekeras.my.id" },
+          { label: "jadi.pw", url: "https://jadi.pw" },
+        ],
+      };
+
+      const I18N = {
+        id: {
+          tagline: "AI-driven Solution Architect",
+          greeting: "hai,",
+          here: "disini.",
+          contact_pre: "tertarik lebih lanjut? email saya di",
+          rate_pre: "open to collaboration · mulai dari",
+          sec_products: "produk dari lab",
+          sec_web: "web yang dikelola",
+          sec_side: "side project",
+          sec_themes: "theme web",
+          sec_cyber: "cybersecurity tools",
+          sec_find: "find me",
+          also_see: "lihat juga",
+          mobile_ver: "versi mobile",
+          showcase_hint: "hover produk untuk preview →",
+        },
+        en: {
+          tagline: "AI-driven Solution Architect",
+          greeting: "hey,",
+          here: "i'm here.",
+          contact_pre: "interested? reach me at",
+          rate_pre: "open to collaboration · starting at",
+          sec_products: "products from the lab",
+          sec_web: "managed websites",
+          sec_side: "side projects",
+          sec_themes: "web themes",
+          sec_cyber: "cybersecurity tools",
+          sec_find: "find me",
+          also_see: "also check",
+          mobile_ver: "mobile version",
+          showcase_hint: "hover a product to preview →",
+        },
+        ms: {
+          tagline: "AI-driven Solution Architect",
+          greeting: "hai,",
+          here: "saya disini.",
+          contact_pre: "berminat? emel saya di",
+          rate_pre: "terbuka untuk kerjasama · bermula",
+          sec_products: "produk dari lab",
+          sec_web: "laman web diurus",
+          sec_side: "projek sampingan",
+          sec_themes: "tema web",
+          sec_cyber: "alat keselamatan siber",
+          sec_find: "hubungi saya",
+          also_see: "lihat juga",
+          mobile_ver: "versi mudah alih",
+          showcase_hint: "hover produk untuk pratonton →",
+        },
+        ar: {
+          tagline: "أدوات من المختبر",
+          greeting: "مرحباً،",
+          here: "أنا هنا.",
+          contact_pre: "مهتم؟ راسلني على",
+          rate_pre: "متاح للتعاون · يبدأ من",
+          sec_products: "منتجات المختبر",
+          sec_web: "المواقع المدارة",
+          sec_side: "مشاريع جانبية",
+          sec_themes: "قوالب ويب",
+          sec_cyber: "أدوات الأمن السيبراني",
+          sec_find: "تواصل معي",
+          also_see: "شاهد أيضاً",
+          mobile_ver: "النسخة المحمولة",
+          showcase_hint: "← مرر فوق منتج للمعاينة",
+        },
+      };
+
+      let lang = "id";
+      const t = (k) => (I18N[lang] || I18N.id)[k] || k;
+
+      /* ── SHOWCASE ── */
+      let activeSlot = null;
+      let showcaseTimer = null;
+
+      function buildShowcaseSlots() {
+        const panel = document.getElementById("showcase-panel");
+        // remove old product slots
+        panel
+          .querySelectorAll(".showcase-slot:not(.default)")
+          .forEach((s) => s.remove());
+        DATA.products.forEach((p, i) => {
+          const slot = document.createElement("div");
+          slot.className = "showcase-slot";
+          slot.id = `slot-${i}`;
+          if (p.media.type === "video") {
+            slot.innerHTML = `<video src="${p.media.src}" autoplay loop muted playsinline></video>`;
+          } else {
+            slot.innerHTML = `<img src="${p.media.src}" alt="${p.name}" loading="lazy">`;
+          }
+          panel.appendChild(slot);
+        });
+      }
+
+      function showSlot(i) {
+        const def = document.getElementById("showcase-default");
+        const slot = document.getElementById(`slot-${i}`);
+        if (!slot) return;
+        def.classList.remove("default");
+        def.style.opacity = "0";
+        if (activeSlot && activeSlot !== slot)
+          activeSlot.classList.remove("active");
+        slot.classList.add("active");
+        activeSlot = slot;
+      }
+
+      function hideSlot() {
+        if (activeSlot) {
+          activeSlot.classList.remove("active");
+          activeSlot = null;
+        }
+        const def = document.getElementById("showcase-default");
+        def.style.opacity = "1";
+      }
+
+      /* ── BUILD PRODUCT LIST ── */
+      function buildProductList() {
+        const ul = document.getElementById("list-produk");
+        if (!ul) return;
+        ul.innerHTML = "";
+        DATA.products.forEach((p, i) => {
+          const li = document.createElement("li");
+          const pn = document.createElement("span");
+          pn.className = "pname";
+          pn.textContent = p.name;
+          const pd = document.createElement("span");
+          pd.className = "pdesc";
+          pd.innerHTML = p.desc[lang] || p.desc.id;
+          li.appendChild(pn);
+          li.appendChild(pd);
+          li.addEventListener("mouseenter", () => {
+            clearTimeout(showcaseTimer);
+            showSlot(i);
+          });
+          li.addEventListener("mouseleave", () => {
+            showcaseTimer = setTimeout(hideSlot, 300);
+          });
+          ul.appendChild(li);
+        });
+        buildShowcaseSlots();
+        observe(ul, "li");
+      }
+
+      function buildItem(item, linked) {
+        const li = document.createElement("li");
+        const pn = document.createElement("span");
+        pn.className = "pname";
+        pn.innerHTML =
+          linked && item.url
+            ? `<a href="${item.url}" target="_blank">${item.name}</a>`
+            : item.name;
+        const pd = document.createElement("span");
+        pd.className = "pdesc";
+        pd.innerHTML = item.desc[lang] || item.desc.id;
+        li.appendChild(pn);
+        li.appendChild(pd);
+        return li;
+      }
+      function buildList(id, items, linked = false) {
+        const ul = document.getElementById(id);
+        if (!ul) return;
+        ul.innerHTML = "";
+        items.forEach((item) => ul.appendChild(buildItem(item, linked)));
+        observe(ul, "li");
+      }
+
+      function buildCards() {
+        const g = document.getElementById("web-cards");
+        if (!g) return;
+        g.innerHTML = "";
+        DATA.websites.forEach((site) => {
+          const el = site.url
+            ? document.createElement("a")
+            : document.createElement("div");
+          el.className = "card";
+          if (site.url) {
+            el.href = site.url;
+            el.target = "_blank";
+          }
+          let subsHTML = "";
+          if (site.subs.length) {
+            subsHTML = `<div class="card-subs">${site.subs
+              .map(
+                (s) => `
+        <a class="sub-link" href="${s.url}" target="_blank" onclick="event.stopPropagation()">
+          <span class="sub-link-name">${s.name}</span>
+          <span class="sub-link-desc">${s.desc[lang] || s.desc.id}</span>
+        </a>`,
+              )
+              .join("")}</div>`;
+          }
+          el.innerHTML = `<div class="card-name">${site.name}</div><div class="card-desc">${site.desc[lang] || site.desc.id}</div>${subsHTML}`;
+          g.appendChild(el);
+        });
+        observe(g, ".card", "#desktop-links");
+      }
+
+      function buildSocials() {
+        const w = document.getElementById("socials");
+        if (!w) return;
+        w.innerHTML = "";
+        DATA.socials.forEach((s) => {
+          const a = document.createElement("a");
+          a.className = "social-pill";
+          a.href = s.url;
+          a.textContent = s.label;
+          if (!s.url.startsWith("mailto")) a.target = "_blank";
+          w.appendChild(a);
+        });
+        observe(w, ".social-pill", "#footer-note");
+      }
+
+      function buildRate() {
+        const r = RATES[lang] || RATES.en;
+        const el = document.getElementById("hero-rate");
+        if (!el) return;
+        const pre = t("rate_pre");
+        el.innerHTML = `${pre} <span class="amount">${r.symbol}${r.amount}/${r.unit}</span> <span style="opacity:.6;font-size:.85em">${r.note}</span>`;
+      }
+
+      function buildAll() {
+        buildProductList();
+        buildList("list-side", DATA.side, true);
+        buildList("list-themes", DATA.themes);
+        buildList("list-cyber", DATA.cyber);
+        buildCards();
+        buildSocials();
+        buildRate();
+      }
+
+      function applyI18n() {
+        document.documentElement.lang = lang;
+        document
+          .querySelectorAll("[data-i18n]")
+          .forEach((el) => (el.textContent = t(el.dataset.i18n)));
+      }
+
+      /* ── OBSERVE ── */
+      function observe(parent, childSel, extraSel = null) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              const kids = [...e.target.querySelectorAll(childSel)];
+              kids.forEach((el, i) =>
+                setTimeout(() => el.classList.add("in"), i * 65),
+              );
+              if (extraSel)
+                setTimeout(
+                  () => document.querySelector(extraSel)?.classList.add("in"),
+                  kids.length * 65 + 120,
+                );
+              io.disconnect();
+            });
+          },
+          { threshold: 0.04 },
+        );
+        io.observe(parent);
+      }
+
+      /* ── TOPBAR SCROLL ── */
+      const heroSec = document.getElementById("hero-section");
+      const logoEl = document.getElementById("topbar-logo");
+      const topbarEl = document.getElementById("topbar");
+      new IntersectionObserver(
+        ([e]) => {
+          logoEl.classList.toggle("show", !e.isIntersecting);
+          topbarEl.classList.toggle("scrolled", !e.isIntersecting);
+        },
+        { threshold: 0.1 },
+      ).observe(heroSec);
+
+      /* ── THEME ── */
+      document
+        .getElementById("themeBtn")
+        .addEventListener("click", function () {
+          const dark =
+            document.documentElement.getAttribute("data-theme") === "dark";
+          document.documentElement.setAttribute(
+            "data-theme",
+            dark ? "" : "dark",
+          );
+          this.textContent = dark ? "dark" : "light";
+        });
+
+      /* ── LANG ── */
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          lang = btn.dataset.lang;
+          document
+            .querySelectorAll(".lang-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          applyI18n();
+          buildAll();
+        });
+      });
+
+      /* ── INIT ── */
+      applyI18n();
+      buildAll();
+    </script>
+  </body>
 </html>
