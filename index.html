@@ -149,7 +149,9 @@
         justify-content: center;
         cursor: pointer;
         border-radius: 2px;
-        transition: color 0.2s, background 0.2s;
+        transition:
+          color 0.2s,
+          background 0.2s;
         padding: 0;
         flex-shrink: 0;
       }
@@ -172,7 +174,9 @@
         cursor: pointer;
         padding: 4px 6px;
         border-radius: 2px;
-        transition: color 0.2s, background 0.2s;
+        transition:
+          color 0.2s,
+          background 0.2s;
         display: flex;
         align-items: center;
         gap: 3px;
@@ -202,7 +206,7 @@
         flex-direction: column;
         min-width: 80px;
         z-index: 400;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       }
       .lang-picker.open .lang-dropdown {
         display: flex;
@@ -217,7 +221,9 @@
         padding: 8px 14px;
         text-align: left;
         cursor: pointer;
-        transition: background 0.15s, color 0.15s;
+        transition:
+          background 0.15s,
+          color 0.15s;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -368,7 +374,7 @@
         transition:
           opacity 0.45s,
           transform 0.45s;
-        cursor: default;
+        cursor: pointer;
       }
       .plist li:first-child {
         border-top: 1px solid var(--border);
@@ -467,9 +473,9 @@
       .card {
         padding: clamp(24px, 3vw, 44px);
         border-right: 1px solid var(--border);
-        text-decoration: none;
         color: var(--fg);
         display: block;
+        cursor: pointer;
         opacity: 0;
         transform: translateY(8px);
         transition:
@@ -642,6 +648,180 @@
           line-height: 1.5;
         }
       }
+
+      /* ── MODAL ── */
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(20px);
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
+        overflow: hidden;
+      }
+      .modal.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+      }
+      .modal-close {
+        position: fixed;
+        top: 14px;
+        right: 20px;
+        z-index: 1010;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: var(--font);
+        font-size: 18px;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 2px;
+        line-height: 1;
+        transition: all 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--fg);
+        border-color: var(--fg);
+      }
+      .modal-media {
+        width: 100%;
+        height: 46vh;
+        flex-shrink: 0;
+        overflow: hidden;
+        background: var(--hover-bg);
+      }
+      .modal-media img,
+      .modal-media video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .modal-media[hidden] {
+        display: none;
+      }
+      #modalScrollBody {
+        overflow-y: auto;
+        flex: 1;
+      }
+      .modal-body {
+        padding: 52px 56px;
+        max-width: 820px;
+      }
+      @media (max-width: 700px) {
+        .modal-media {
+          height: 36vh;
+        }
+        .modal-body {
+          padding: 32px 22px;
+        }
+      }
+      .modal-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .modal-category {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .modal-status {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 2px;
+      }
+      .modal-status[data-s="active"] {
+        color: #5a9e6b;
+        border-color: #5a9e6b44;
+      }
+      .modal-status[data-s="wip"] {
+        color: #c49a1a;
+        border-color: #c49a1a44;
+      }
+      .modal-status[data-s="archived"] {
+        opacity: 0.4;
+      }
+      .modal-name {
+        font-size: clamp(36px, 7vw, 68px);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 18px;
+      }
+      .modal-desc {
+        font-size: clamp(15px, 1.4vw, 18px);
+        color: var(--muted);
+        margin-bottom: 16px;
+        line-height: 1.6;
+      }
+      .modal-detail {
+        font-size: clamp(14px, 1.2vw, 17px);
+        line-height: 2;
+        margin-bottom: 28px;
+        opacity: 0.85;
+      }
+      .modal-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 32px;
+      }
+      .modal-tag {
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        padding: 3px 10px;
+        border-radius: 2px;
+      }
+      .modal-cta {
+        display: inline-block;
+        font-size: 13px;
+        letter-spacing: 0.07em;
+        font-family: var(--font);
+        color: var(--bg);
+        background: var(--fg);
+        padding: 11px 28px;
+        text-decoration: none;
+        border-radius: 2px;
+        transition: opacity 0.2s;
+      }
+      .modal-cta:hover {
+        opacity: 0.75;
+      }
+      .modal-cta[hidden] {
+        display: none;
+      }
+      .modal-subs {
+        margin-top: 28px;
+        padding-top: 28px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .modal-subs[hidden] {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -651,20 +831,45 @@
       </div>
       <div class="topbar-right">
         <!-- theme toggle -->
-        <button class="ctrl-icon" id="themeBtn" title="toggle theme" aria-label="toggle theme">☀</button>
+        <button
+          class="ctrl-icon"
+          id="themeBtn"
+          title="toggle theme"
+          aria-label="toggle theme"
+        >
+          ☀
+        </button>
         <!-- lang picker -->
         <div class="lang-picker" id="langPicker">
-          <button class="lang-current" id="langCurrent" aria-haspopup="listbox" aria-expanded="false">
+          <button
+            class="lang-current"
+            id="langCurrent"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
             <span id="langLabel">ID</span>
-            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M1 1l4 4 4-4"/>
+            <svg
+              viewBox="0 0 10 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M1 1l4 4 4-4" />
             </svg>
           </button>
           <div class="lang-dropdown" role="listbox">
-            <button class="lang-opt active" data-lang="id" role="option"><span class="lang-flag">🇮🇩</span> ID</button>
-            <button class="lang-opt" data-lang="en" role="option"><span class="lang-flag">🇬🇧</span> EN</button>
-            <button class="lang-opt" data-lang="ms" role="option"><span class="lang-flag">🇲🇾</span> MY</button>
-            <button class="lang-opt" data-lang="ar" role="option"><span class="lang-flag">🇸🇦</span> AR</button>
+            <button class="lang-opt active" data-lang="id" role="option">
+              <span class="lang-flag">🇮🇩</span> ID
+            </button>
+            <button class="lang-opt" data-lang="en" role="option">
+              <span class="lang-flag">🇬🇧</span> EN
+            </button>
+            <button class="lang-opt" data-lang="ms" role="option">
+              <span class="lang-flag">🇲🇾</span> MY
+            </button>
+            <button class="lang-opt" data-lang="ar" role="option">
+              <span class="lang-flag">🇸🇦</span> AR
+            </button>
           </div>
         </div>
       </div>
@@ -745,316 +950,136 @@
       </section>
     </div>
 
+    <!-- ═══════════════ MODAL ═══════════════ -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose" aria-label="close">×</button>
+      <div class="modal-media" id="modalMedia"></div>
+      <div id="modalScrollBody">
+        <div class="modal-body">
+          <div class="modal-meta">
+            <span class="modal-category" id="modalCategory"></span>
+            <span class="modal-status" id="modalStatus"></span>
+          </div>
+          <h2 class="modal-name" id="modalName"></h2>
+          <p class="modal-desc" id="modalDesc"></p>
+          <p class="modal-detail" id="modalDetail"></p>
+          <div class="modal-tags" id="modalTags"></div>
+          <a
+            class="modal-cta"
+            id="modalCta"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            hidden
+          ></a>
+          <div class="modal-subs" id="modalSubs" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="content.js"></script>
     <script>
-      /* ── RATE per currency ── */
-      const RATES = {
-        id: {
-          symbol: "Rp",
-          amount: "750.000",
-          unit: "jam",
-          note: "(perkiraan, tergantung proyek)",
-        },
-        en: { symbol: "$", amount: "45", unit: "hr", note: "(negotiable)" },
-        ms: {
-          symbol: "RM",
-          amount: "210",
-          unit: "jam",
-          note: "(boleh dirunding)",
-        },
-        ar: { symbol: "$", amount: "45", unit: "hr", note: "(قابل للتفاوض)" },
-      };
-
-      /* ── DATA ── */
-      const DATA = {
-        products: [
-          {
-            name: "ViGen",
-            desc: {
-              id: "Video Generator With AI",
-              en: "Video Generator With AI",
-              ms: "Penjana Video Dengan AI",
-              ar: "مولّد فيديو بالذكاء الاصطناعي",
-            },
-            // showcase: put real URLs here — using placeholder animated SVGs for demo
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80",
-            },
-          },
-          {
-            name: "GenSu",
-            desc: {
-              id: "Si Pembuat Surat",
-              en: "Letter & Document Generator",
-              ms: "Penjana Surat & Dokumen",
-              ar: "منشئ الرسائل والوثائق",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80",
-            },
-          },
-          {
-            name: "Content Intelligence",
-            desc: {
-              id: "Pembuat Konten Berdasarkan Insight",
-              en: "Insight-Based Content Generator",
-              ms: "Penjana Kandungan Berasaskan Insight",
-              ar: "إنشاء محتوى مبني على البيانات",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-            },
-          },
-          {
-            name: "Indexer",
-            desc: {
-              id: "Otomatis Indexing Website",
-              en: "Automatic Website Indexer",
-              ms: "Pengindeks Laman Web Automatik",
-              ar: "أداة فهرسة المواقع التلقائية",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80",
-            },
-          },
-          {
-            name: "1826d",
-            desc: {
-              id: "Catatan Perjalanan Hidup",
-              en: "Life Journey Journal",
-              ms: "Jurnal Perjalanan Hidup",
-              ar: "يوميات رحلة الحياة",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=800&q=80",
-            },
-          },
-          {
-            name: "lihatmami",
-            desc: {
-              id: "Steganography · art <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
-              en: "Steganography · art <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
-              ms: "Steganografi · seni <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
-              ar: "إخفاء البيانات · <a href='https://instagram.com/kodekeras.jpg' target='_blank'>@kodekeras.jpg</a>",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80",
-            },
-          },
-          {
-            name: "jadicms",
-            desc: {
-              id: "Git Based Content Hub & Media Management",
-              en: "Git-Based Content Hub & Media Management",
-              ms: "Hab Kandungan Berasaskan Git",
-              ar: "إدارة المحتوى والوسائط عبر Git",
-            },
-            media: {
-              type: "img",
-              src: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&q=80",
-            },
-          },
-        ],
-        websites: [
-          {
-            name: "schlab.id",
-            url: "https://schlab.id",
-            desc: {
-              id: "School as Living Lab",
-              en: "School as Living Lab",
-              ms: "Sekolah sebagai Makmal Hidup",
-              ar: "المدرسة كمختبر حي",
-            },
-            subs: [],
-          },
-          {
-            name: "jadi.pw",
-            url: "https://jadi.pw",
-            desc: {
-              id: "Digital Product Marketplace & Productivity Tools",
-              en: "Digital Product Marketplace & Productivity Tools",
-              ms: "Pasaran Produk Digital & Alat Produktiviti",
-              ar: "سوق المنتجات الرقمية",
-            },
-            subs: [
-              {
-                name: "kampung.jadi.pw",
-                url: "https://kampung.jadi.pw",
-                desc: {
-                  id: "Digitalisasi Warga Desa",
-                  en: "Village Community Digitalization",
-                  ms: "Pendigitalan Komuniti Kampung",
-                  ar: "رقمنة المجتمعات القروية",
-                },
-              },
-              {
-                name: "refleksi.jadi.pw",
-                url: "https://refleksi.jadi.pw",
-                desc: {
-                  id: "Ruang Introspeksi Diri",
-                  en: "Self-Reflection Space",
-                  ms: "Ruang Refleksi Diri",
-                  ar: "فضاء التأمل الذاتي",
-                },
-              },
-            ],
-          },
-          {
-            name: "KodeKeras Society",
-            url: "https://society.kodekeras.my.id",
-            desc: {
-              id: "Productivity Tracking",
-              en: "Productivity Tracking",
-              ms: "Penjejak Produktiviti",
-              ar: "تتبع الإنتاجية",
-            },
-            subs: [],
-          },
-        ],
-        side: [
-          {
-            name: "monstroku",
-            url: "https://instagram.com/monstroku",
-            desc: {
-              id: "universe project · imajinasi dan kolaborasi ayah dan anak",
-              en: "universe project · imagination & father-son collaboration",
-              ms: "projek semesta · imaginasi & kolaborasi ayah dan anak",
-              ar: "مشروع كوني · تعاون بين الأب والابن",
-            },
-          },
-        ],
-        themes: [
-          {
-            name: "./pentest",
-            desc: {
-              id: "blog template for hacker notes",
-              en: "blog template for hacker notes",
-              ms: "templat blog penggodam",
-              ar: "قالب مدونة للهاكر",
-            },
-          },
-          {
-            name: "Sekolahku",
-            desc: {
-              id: "web template for school",
-              en: "web template for school",
-              ms: "templat web sekolah",
-              ar: "قالب موقع للمدارس",
-            },
-          },
-        ],
-        cyber: [
-          {
-            name: "BeterCut",
-            desc: {
-              id: "Alternatif Netcut",
-              en: "Netcut Alternative",
-              ms: "Alternatif Netcut",
-              ar: "بديل Netcut",
-            },
-          },
-          {
-            name: "Rp",
-            desc: {
-              id: "a spying tools",
-              en: "a spying tool",
-              ms: "alat pengintipan",
-              ar: "أداة تجسس",
-            },
-          },
-        ],
-        socials: [
-          { label: "email", url: "mailto:indway@duck.com" },
-          {
-            label: "follow @indthatway",
-            url: "https://instagram.com/indthatway",
-          },
-          { label: "desktop", url: "https://kodekeras.my.id" },
-        ],
-      };
-
-      const I18N = {
-        id: {
-          tagline: "AI-driven Solution Architect",
-          greeting: "hai,",
-          here: "disini.",
-          contact_pre: "tertarik lebih lanjut? email saya di",
-          rate_pre: "open to collaboration · mulai dari",
-          sec_products: "produk dari lab",
-          sec_web: "web yang dikelola",
-          sec_side: "side project",
-          sec_themes: "theme web",
-          sec_cyber: "cybersecurity tools",
-          sec_find: "find me",
-          also_see: "lihat juga",
-          mobile_ver: "versi mobile",
-          showcase_hint: "hover produk untuk preview →",
-        },
-        en: {
-          tagline: "AI-driven Solution Architect",
-          greeting: "hey,",
-          here: "i'm here.",
-          contact_pre: "interested? reach me at",
-          rate_pre: "open to collaboration · starting at",
-          sec_products: "products from the lab",
-          sec_web: "managed websites",
-          sec_side: "side projects",
-          sec_themes: "web themes",
-          sec_cyber: "cybersecurity tools",
-          sec_find: "find me",
-          also_see: "also check",
-          mobile_ver: "mobile version",
-          showcase_hint: "hover a product to preview →",
-        },
-        ms: {
-          tagline: "AI-driven Solution Architect",
-          greeting: "hai,",
-          here: "saya disini.",
-          contact_pre: "berminat? emel saya di",
-          rate_pre: "terbuka untuk kerjasama · bermula",
-          sec_products: "produk dari lab",
-          sec_web: "laman web diurus",
-          sec_side: "projek sampingan",
-          sec_themes: "tema web",
-          sec_cyber: "alat keselamatan siber",
-          sec_find: "hubungi saya",
-          also_see: "lihat juga",
-          mobile_ver: "versi mudah alih",
-          showcase_hint: "hover produk untuk pratonton →",
-        },
-        ar: {
-          tagline: "أدوات من المختبر",
-          greeting: "مرحباً،",
-          here: "أنا هنا.",
-          contact_pre: "مهتم؟ راسلني على",
-          rate_pre: "متاح للتعاون · يبدأ من",
-          sec_products: "منتجات المختبر",
-          sec_web: "المواقع المدارة",
-          sec_side: "مشاريع جانبية",
-          sec_themes: "قوالب ويب",
-          sec_cyber: "أدوات الأمن السيبراني",
-          sec_find: "تواصل معي",
-          also_see: "شاهد أيضاً",
-          mobile_ver: "النسخة المحمولة",
-          showcase_hint: "← مرر فوق منتج للمعاينة",
-        },
-      };
+      /* ═══════════════════════════════════════
+         DATA
+      ═══════════════════════════════════════ */
+      const DATA = window.INDWAY_DATA;
+      const RATES = DATA.rates;
+      const I18N = DATA.i18n;
 
       let lang = "id";
-      const t = (k) => (I18N[lang] || I18N.id)[k] || k;
+      const t = (k) => (I18N[lang] || I18N.id || {})[k] || k;
 
-      /* ── SHOWCASE ── */
-      let activeSlot = null;
-      let showcaseTimer = null;
+      /* ═══════════════════════════════════════
+         MODAL
+      ═══════════════════════════════════════ */
+      const modalEl = document.getElementById("modal");
+      const modalClose = document.getElementById("modalClose");
+
+      function openModal(item) {
+        const STATUS = {
+          active: "modal_status_active",
+          wip: "modal_status_wip",
+          archived: "modal_status_archived",
+        };
+        // media
+        const mediaEl = document.getElementById("modalMedia");
+        mediaEl.innerHTML = "";
+        if (item.media?.src) {
+          mediaEl.innerHTML =
+            item.media.type === "video"
+              ? `<video src="${item.media.src}" autoplay loop muted playsinline></video>`
+              : `<img src="${item.media.src}" alt="${item.name}" loading="lazy">`;
+          mediaEl.hidden = false;
+        } else {
+          mediaEl.hidden = true;
+        }
+        // meta
+        document.getElementById("modalCategory").textContent =
+          item.category || "";
+        const statusEl = document.getElementById("modalStatus");
+        statusEl.textContent = t(STATUS[item.status]) || item.status || "";
+        statusEl.dataset.s = item.status || "";
+        // text
+        document.getElementById("modalName").textContent = item.name;
+        document.getElementById("modalDesc").textContent =
+          item.desc?.[lang] || item.desc?.id || "";
+        document.getElementById("modalDetail").textContent =
+          item.detail?.[lang] || item.detail?.id || "";
+        // tags
+        document.getElementById("modalTags").innerHTML = (item.tags || [])
+          .map((tag) => `<span class="modal-tag">${tag}</span>`)
+          .join("");
+        // cta
+        const ctaEl = document.getElementById("modalCta");
+        if (item.url) {
+          ctaEl.href = item.url;
+          ctaEl.textContent = t("modal_visit");
+          ctaEl.hidden = false;
+        } else {
+          ctaEl.hidden = true;
+        }
+        // sub-links
+        const subsEl = document.getElementById("modalSubs");
+        subsEl.innerHTML = "";
+        if (item.subs?.length) {
+          item.subs.forEach((s) => {
+            const a = document.createElement("a");
+            a.className = "sub-link";
+            a.href = s.url;
+            a.target = "_blank";
+            a.innerHTML = `<span class="sub-link-name">${s.name}</span><span class="sub-link-desc">${s.desc?.[lang] || s.desc?.id || ""}</span>`;
+            subsEl.appendChild(a);
+          });
+          subsEl.hidden = false;
+        } else {
+          subsEl.hidden = true;
+        }
+        modalEl.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("modalScrollBody").scrollTop = 0;
+      }
+
+      function closeModal() {
+        modalEl.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      modalClose.addEventListener("click", closeModal);
+      modalEl.addEventListener("click", (e) => {
+        if (e.target === modalEl) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      /* ═══════════════════════════════════════
+         SHOWCASE
+      ═══════════════════════════════════════ */
+      let activeSlot = null,
+        showcaseTimer = null;
 
       function buildShowcaseSlots() {
         const panel = document.getElementById("showcase-panel");
-        // remove old product slots
         panel
           .querySelectorAll(".showcase-slot:not(.default)")
           .forEach((s) => s.remove());
@@ -1062,9 +1087,9 @@
           const slot = document.createElement("div");
           slot.className = "showcase-slot";
           slot.id = `slot-${i}`;
-          if (p.media.type === "video") {
+          if (p.media?.type === "video") {
             slot.innerHTML = `<video src="${p.media.src}" autoplay loop muted playsinline></video>`;
-          } else {
+          } else if (p.media?.src) {
             slot.innerHTML = `<img src="${p.media.src}" alt="${p.name}" loading="lazy">`;
           }
           panel.appendChild(slot);
@@ -1092,7 +1117,9 @@
         def.style.opacity = "1";
       }
 
-      /* ── BUILD PRODUCT LIST ── */
+      /* ═══════════════════════════════════════
+         BUILD
+      ═══════════════════════════════════════ */
       function buildProductList() {
         const ul = document.getElementById("list-produk");
         if (!ul) return;
@@ -1114,32 +1141,32 @@
           li.addEventListener("mouseleave", () => {
             showcaseTimer = setTimeout(hideSlot, 300);
           });
+          li.addEventListener("click", () => openModal(p));
           ul.appendChild(li);
         });
         buildShowcaseSlots();
         observe(ul, "li");
       }
 
-      function buildItem(item, linked) {
+      function buildItem(item) {
         const li = document.createElement("li");
         const pn = document.createElement("span");
         pn.className = "pname";
-        pn.innerHTML =
-          linked && item.url
-            ? `<a href="${item.url}" target="_blank">${item.name}</a>`
-            : item.name;
+        pn.textContent = item.name;
         const pd = document.createElement("span");
         pd.className = "pdesc";
         pd.innerHTML = item.desc[lang] || item.desc.id;
         li.appendChild(pn);
         li.appendChild(pd);
+        li.addEventListener("click", () => openModal(item));
         return li;
       }
-      function buildList(id, items, linked = false) {
+
+      function buildList(id, items) {
         const ul = document.getElementById(id);
         if (!ul) return;
         ul.innerHTML = "";
-        items.forEach((item) => ul.appendChild(buildItem(item, linked)));
+        items.forEach((item) => ul.appendChild(buildItem(item)));
         observe(ul, "li");
       }
 
@@ -1148,27 +1175,27 @@
         if (!g) return;
         g.innerHTML = "";
         DATA.websites.forEach((site) => {
-          const el = site.url
-            ? document.createElement("a")
-            : document.createElement("div");
+          const el = document.createElement("div");
           el.className = "card";
-          if (site.url) {
-            el.href = site.url;
-            el.target = "_blank";
-          }
+          el.setAttribute("role", "button");
+          el.setAttribute("tabindex", "0");
           let subsHTML = "";
-          if (site.subs.length) {
+          if (site.subs?.length) {
             subsHTML = `<div class="card-subs">${site.subs
               .map(
-                (s) => `
-        <a class="sub-link" href="${s.url}" target="_blank" onclick="event.stopPropagation()">
-          <span class="sub-link-name">${s.name}</span>
-          <span class="sub-link-desc">${s.desc[lang] || s.desc.id}</span>
-        </a>`,
+                (s) =>
+                  `<a class="sub-link" href="${s.url}" target="_blank" onclick="event.stopPropagation()">
+                <span class="sub-link-name">${s.name}</span>
+                <span class="sub-link-desc">${s.desc[lang] || s.desc.id}</span>
+              </a>`,
               )
               .join("")}</div>`;
           }
           el.innerHTML = `<div class="card-name">${site.name}</div><div class="card-desc">${site.desc[lang] || site.desc.id}</div>${subsHTML}`;
+          el.addEventListener("click", () => openModal(site));
+          el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") openModal(site);
+          });
           g.appendChild(el);
         });
         observe(g, ".card", "#desktop-links");
@@ -1193,13 +1220,12 @@
         const r = RATES[lang] || RATES.en;
         const el = document.getElementById("hero-rate");
         if (!el) return;
-        const pre = t("rate_pre");
-        el.innerHTML = `${pre} <span class="amount">${r.symbol}${r.amount}/${r.unit}</span> <span style="opacity:.6;font-size:.85em">${r.note}</span>`;
+        el.innerHTML = `${t("rate_pre")} <span class="amount">${r.symbol}${r.amount}/${r.unit}</span> <span style="opacity:.6;font-size:.85em">${r.note}</span>`;
       }
 
       function buildAll() {
         buildProductList();
-        buildList("list-side", DATA.side, true);
+        buildList("list-side", DATA.side);
         buildList("list-themes", DATA.themes);
         buildList("list-cyber", DATA.cyber);
         buildCards();
@@ -1214,7 +1240,9 @@
           .forEach((el) => (el.textContent = t(el.dataset.i18n)));
       }
 
-      /* ── OBSERVE ── */
+      /* ═══════════════════════════════════════
+         OBSERVE
+      ═══════════════════════════════════════ */
       function observe(parent, childSel, extraSel = null) {
         const io = new IntersectionObserver(
           (entries) => {
@@ -1237,7 +1265,9 @@
         io.observe(parent);
       }
 
-      /* ── TOPBAR SCROLL ── */
+      /* ═══════════════════════════════════════
+         TOPBAR SCROLL
+      ═══════════════════════════════════════ */
       const heroSec = document.getElementById("hero-section");
       const logoEl = document.getElementById("topbar-logo");
       const topbarEl = document.getElementById("topbar");
@@ -1249,9 +1279,9 @@
         { threshold: 0.1 },
       ).observe(heroSec);
 
-      /* ── AUTO THEME BY TIME ── */
-      // siang = 06:00–18:00 light, lainnya dark
-      // manual override tetap bisa via button
+      /* ═══════════════════════════════════════
+         AUTO THEME
+      ═══════════════════════════════════════ */
       let themeManualOverride = false;
 
       function getAutoTheme() {
@@ -1261,97 +1291,110 @@
 
       function applyTheme(mode, isAuto) {
         const isDark = mode === "dark";
-        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "");
+        document.documentElement.setAttribute(
+          "data-theme",
+          isDark ? "dark" : "",
+        );
         const btn = document.getElementById("themeBtn");
-        btn.textContent = isDark ? "🌙" : "☀";
+        btn.textContent = isDark ? "\uD83C\uDF19" : "\u2600";
         btn.title = isAuto
-          ? `auto · ${isDark ? "night" : "day"} mode`
-          : (isDark ? "night mode" : "day mode");
-        document.getElementById("theme-meta").setAttribute("content", isDark ? "#0c0c0c" : "#ffffff");
+          ? `auto \u00B7 ${isDark ? "night" : "day"} mode`
+          : isDark
+            ? "night mode"
+            : "day mode";
+        document
+          .getElementById("theme-meta")
+          .setAttribute("content", isDark ? "#0c0c0c" : "#ffffff");
       }
 
-      // Set tema otomatis saat load
       applyTheme(getAutoTheme(), true);
-
-      // Periksa ulang setiap menit
       setInterval(() => {
         if (!themeManualOverride) applyTheme(getAutoTheme(), true);
       }, 60000);
+      document
+        .getElementById("themeBtn")
+        .addEventListener("click", function () {
+          themeManualOverride = true;
+          applyTheme(
+            document.documentElement.getAttribute("data-theme") === "dark"
+              ? "light"
+              : "dark",
+            false,
+          );
+        });
 
-      document.getElementById("themeBtn").addEventListener("click", function () {
-        themeManualOverride = true;
-        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-        applyTheme(isDark ? "light" : "dark", false);
-      });
-
-      /* ── AUTO LANG BY LOCALE / TIMEZONE ── */
-      // Mapping timezone region → lang code
+      /* ═══════════════════════════════════════
+         AUTO LANG
+      ═══════════════════════════════════════ */
       const TZ_LANG_MAP = [
-        // Indonesia
-        { match: /^Asia\/(Jakarta|Makassar|Jayapura|Pontianak|Balikpapan|Banjarmasin|Kupang|Ambon|Ternate|Sorong)$/i, lang: "id" },
-        { match: /WIB|WITA|WIT|Indonesia/i,                                              lang: "id" },
-        // Malaysia / Brunei / Singapore
-        { match: /^Asia\/(Kuala_Lumpur|Kuching|Brunei|Singapore)$/i,                    lang: "ms" },
-        // Arab / Middle East
-        { match: /^Asia\/(Riyadh|Dubai|Kuwait|Bahrain|Qatar|Muscat|Aden|Baghdad|Beirut|Amman|Damascus|Jerusalem|Gaza)$/i, lang: "ar" },
-        { match: /^Africa\/(Cairo|Tripoli|Khartoum|Algiers|Casablanca|Tunis|Ceuta)$/i,  lang: "ar" },
+        {
+          match:
+            /^Asia\/(Jakarta|Makassar|Jayapura|Pontianak|Balikpapan|Banjarmasin|Kupang|Ambon|Ternate|Sorong)$/i,
+          lang: "id",
+        },
+        { match: /WIB|WITA|WIT|Indonesia/i, lang: "id" },
+        {
+          match: /^Asia\/(Kuala_Lumpur|Kuching|Brunei|Singapore)$/i,
+          lang: "ms",
+        },
+        {
+          match:
+            /^Asia\/(Riyadh|Dubai|Kuwait|Bahrain|Qatar|Muscat|Aden|Baghdad|Beirut|Amman|Damascus|Jerusalem|Gaza)$/i,
+          lang: "ar",
+        },
+        {
+          match:
+            /^Africa\/(Cairo|Tripoli|Khartoum|Algiers|Casablanca|Tunis|Ceuta)$/i,
+          lang: "ar",
+        },
       ];
-
-      // Mapping locale prefix → lang code
       const LOCALE_LANG_MAP = {
-        id: "id", in: "id",                     // Indonesia
-        ms: "ms", zsm: "ms",                    // Melayu
-        ar: "ar", arb: "ar",                    // Arab
-        en: "en", en_us: "en", en_gb: "en",    // Inggris
+        id: "id",
+        in: "id",
+        ms: "ms",
+        zsm: "ms",
+        ar: "ar",
+        arb: "ar",
+        en: "en",
       };
 
       function detectLang() {
-        // 1. Coba dari navigator.language (paling akurat)
-        const navLang = (navigator.language || navigator.userLanguage || "").toLowerCase().replace("-", "_");
-        const navPrefix = navLang.split("_")[0];
+        const navLang = (navigator.language || "")
+          .toLowerCase()
+          .replace("-", "_");
+        const prefix = navLang.split("_")[0];
         if (LOCALE_LANG_MAP[navLang]) return LOCALE_LANG_MAP[navLang];
-        if (LOCALE_LANG_MAP[navPrefix]) return LOCALE_LANG_MAP[navPrefix];
-
-        // 2. Coba dari timezone
+        if (LOCALE_LANG_MAP[prefix]) return LOCALE_LANG_MAP[prefix];
         try {
           const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-          for (const rule of TZ_LANG_MAP) {
-            if (rule.match.test(tz)) return rule.lang;
-          }
-        } catch (e) {}
-
-        // 3. Fallback ID
+          for (const r of TZ_LANG_MAP) if (r.match.test(tz)) return r.lang;
+        } catch (_) {}
         return "id";
       }
 
       function setLang(newLang, isAuto) {
         lang = newLang;
-        // update dropdown options
-        document.querySelectorAll(".lang-opt").forEach((b) => {
-          b.classList.toggle("active", b.dataset.lang === lang);
-        });
-        // update label
+        document
+          .querySelectorAll(".lang-opt")
+          .forEach((b) =>
+            b.classList.toggle("active", b.dataset.lang === lang),
+          );
         const labels = { id: "ID", en: "EN", ms: "MY", ar: "AR" };
-        document.getElementById("langLabel").textContent = labels[lang] || lang.toUpperCase();
+        document.getElementById("langLabel").textContent =
+          labels[lang] || lang.toUpperCase();
+        if (isAuto) document.documentElement.dataset.langAuto = lang;
         applyI18n();
         buildAll();
-        if (isAuto) document.documentElement.dataset.langAuto = lang;
       }
 
-      // Deteksi dan terapkan bahasa otomatis
-      const autoLang = detectLang();
-      lang = autoLang;
-
-      /* ── LANG PICKER ── */
+      /* lang picker UI */
       const langPicker = document.getElementById("langPicker");
       const langCurrent = document.getElementById("langCurrent");
-
       langCurrent.addEventListener("click", (e) => {
         e.stopPropagation();
         const open = langPicker.classList.toggle("open");
         langCurrent.setAttribute("aria-expanded", open);
       });
-
       document.querySelectorAll(".lang-opt").forEach((btn) => {
         btn.addEventListener("click", () => {
           setLang(btn.dataset.lang, false);
@@ -1359,15 +1402,15 @@
           langCurrent.setAttribute("aria-expanded", "false");
         });
       });
-
-      // tutup dropdown kalau klik di luar
       document.addEventListener("click", () => {
         langPicker.classList.remove("open");
         langCurrent.setAttribute("aria-expanded", "false");
       });
 
-      /* ── INIT ── */
-      setLang(autoLang, true);
+      /* ═══════════════════════════════════════
+         INIT
+      ═══════════════════════════════════════ */
+      setLang(detectLang(), true);
     </script>
   </body>
 </html>
