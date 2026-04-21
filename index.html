@@ -37,7 +37,7 @@
     <link rel="icon" href="assets/favicon.svg" />
 
     <!-- Theme -->
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" id="theme-meta" content="#ffffff" />
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap");
@@ -131,29 +131,108 @@
 
       .topbar-right {
         display: flex;
-        gap: 6px;
+        align-items: center;
+        gap: 4px;
       }
 
-      .ctrl {
+      /* ── minimal controls ── */
+      .ctrl-icon {
         background: none;
-        border: 1px solid var(--border);
+        border: none;
         color: var(--muted);
         font-family: var(--font);
-        font-size: 12px;
-        letter-spacing: 0.07em;
-        padding: 5px 13px;
+        font-size: 15px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         border-radius: 2px;
-        transition: all 0.2s;
+        transition: color 0.2s, background 0.2s;
+        padding: 0;
+        flex-shrink: 0;
       }
-      .ctrl:hover {
+      .ctrl-icon:hover {
         color: var(--fg);
-        border-color: var(--fg);
+        background: var(--hover-bg);
       }
-      .ctrl.active {
-        background: var(--fg);
-        color: var(--bg);
-        border-color: var(--fg);
+
+      /* ── lang picker ── */
+      .lang-picker {
+        position: relative;
+      }
+      .lang-current {
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-family: var(--font);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        padding: 4px 6px;
+        border-radius: 2px;
+        transition: color 0.2s, background 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .lang-current:hover {
+        color: var(--fg);
+        background: var(--hover-bg);
+      }
+      .lang-current svg {
+        width: 9px;
+        height: 9px;
+        opacity: 0.5;
+        transition: transform 0.2s;
+      }
+      .lang-picker.open .lang-current svg {
+        transform: rotate(180deg);
+      }
+      .lang-dropdown {
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+        min-width: 80px;
+        z-index: 400;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+      .lang-picker.open .lang-dropdown {
+        display: flex;
+      }
+      .lang-opt {
+        background: none;
+        border: none;
+        font-family: var(--font);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        padding: 8px 14px;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .lang-opt:hover {
+        background: var(--hover-bg);
+        color: var(--fg);
+      }
+      .lang-opt.active {
+        color: var(--fg);
+        font-weight: 700;
+      }
+      .lang-opt .lang-flag {
+        font-size: 13px;
+        line-height: 1;
       }
 
       /* ── WRAP full width with padding ── */
@@ -168,10 +247,6 @@
         }
         .wrap {
           padding: 0 22px;
-        }
-        .ctrl {
-          font-size: 11px;
-          padding: 4px 9px;
         }
       }
 
@@ -575,11 +650,23 @@
         indway<span class="topbar-cursor"></span>
       </div>
       <div class="topbar-right">
-        <button class="ctrl lang-btn active" data-lang="id">ID</button>
-        <button class="ctrl lang-btn" data-lang="en">EN</button>
-        <button class="ctrl lang-btn" data-lang="ms">MY</button>
-        <button class="ctrl lang-btn" data-lang="ar">AR</button>
-        <button class="ctrl" id="themeBtn">dark</button>
+        <!-- theme toggle -->
+        <button class="ctrl-icon" id="themeBtn" title="toggle theme" aria-label="toggle theme">☀</button>
+        <!-- lang picker -->
+        <div class="lang-picker" id="langPicker">
+          <button class="lang-current" id="langCurrent" aria-haspopup="listbox" aria-expanded="false">
+            <span id="langLabel">ID</span>
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 1l4 4 4-4"/>
+            </svg>
+          </button>
+          <div class="lang-dropdown" role="listbox">
+            <button class="lang-opt active" data-lang="id" role="option"><span class="lang-flag">🇮🇩</span> ID</button>
+            <button class="lang-opt" data-lang="en" role="option"><span class="lang-flag">🇬🇧</span> EN</button>
+            <button class="lang-opt" data-lang="ms" role="option"><span class="lang-flag">🇲🇾</span> MY</button>
+            <button class="lang-opt" data-lang="ar" role="option"><span class="lang-flag">🇸🇦</span> AR</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -883,13 +970,11 @@
         ],
         socials: [
           { label: "email", url: "mailto:indway@duck.com" },
-          { label: "instagram", url: "https://instagram.com/monstroku" },
           {
-            label: "@kodekeras.jpg",
-            url: "https://instagram.com/kodekeras.jpg",
+            label: "follow @indthatway",
+            url: "https://instagram.com/indthatway",
           },
-          { label: "kodekeras.my.id", url: "https://kodekeras.my.id" },
-          { label: "jadi.pw", url: "https://jadi.pw" },
+          { label: "desktop", url: "https://kodekeras.my.id" },
         ],
       };
 
@@ -1164,35 +1249,125 @@
         { threshold: 0.1 },
       ).observe(heroSec);
 
-      /* ── THEME ── */
-      document
-        .getElementById("themeBtn")
-        .addEventListener("click", function () {
-          const dark =
-            document.documentElement.getAttribute("data-theme") === "dark";
-          document.documentElement.setAttribute(
-            "data-theme",
-            dark ? "" : "dark",
-          );
-          this.textContent = dark ? "dark" : "light";
-        });
+      /* ── AUTO THEME BY TIME ── */
+      // siang = 06:00–18:00 light, lainnya dark
+      // manual override tetap bisa via button
+      let themeManualOverride = false;
 
-      /* ── LANG ── */
-      document.querySelectorAll(".lang-btn").forEach((btn) => {
+      function getAutoTheme() {
+        const hour = new Date().getHours();
+        return hour >= 6 && hour < 18 ? "light" : "dark";
+      }
+
+      function applyTheme(mode, isAuto) {
+        const isDark = mode === "dark";
+        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "");
+        const btn = document.getElementById("themeBtn");
+        btn.textContent = isDark ? "🌙" : "☀";
+        btn.title = isAuto
+          ? `auto · ${isDark ? "night" : "day"} mode`
+          : (isDark ? "night mode" : "day mode");
+        document.getElementById("theme-meta").setAttribute("content", isDark ? "#0c0c0c" : "#ffffff");
+      }
+
+      // Set tema otomatis saat load
+      applyTheme(getAutoTheme(), true);
+
+      // Periksa ulang setiap menit
+      setInterval(() => {
+        if (!themeManualOverride) applyTheme(getAutoTheme(), true);
+      }, 60000);
+
+      document.getElementById("themeBtn").addEventListener("click", function () {
+        themeManualOverride = true;
+        const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        applyTheme(isDark ? "light" : "dark", false);
+      });
+
+      /* ── AUTO LANG BY LOCALE / TIMEZONE ── */
+      // Mapping timezone region → lang code
+      const TZ_LANG_MAP = [
+        // Indonesia
+        { match: /^Asia\/(Jakarta|Makassar|Jayapura|Pontianak|Balikpapan|Banjarmasin|Kupang|Ambon|Ternate|Sorong)$/i, lang: "id" },
+        { match: /WIB|WITA|WIT|Indonesia/i,                                              lang: "id" },
+        // Malaysia / Brunei / Singapore
+        { match: /^Asia\/(Kuala_Lumpur|Kuching|Brunei|Singapore)$/i,                    lang: "ms" },
+        // Arab / Middle East
+        { match: /^Asia\/(Riyadh|Dubai|Kuwait|Bahrain|Qatar|Muscat|Aden|Baghdad|Beirut|Amman|Damascus|Jerusalem|Gaza)$/i, lang: "ar" },
+        { match: /^Africa\/(Cairo|Tripoli|Khartoum|Algiers|Casablanca|Tunis|Ceuta)$/i,  lang: "ar" },
+      ];
+
+      // Mapping locale prefix → lang code
+      const LOCALE_LANG_MAP = {
+        id: "id", in: "id",                     // Indonesia
+        ms: "ms", zsm: "ms",                    // Melayu
+        ar: "ar", arb: "ar",                    // Arab
+        en: "en", en_us: "en", en_gb: "en",    // Inggris
+      };
+
+      function detectLang() {
+        // 1. Coba dari navigator.language (paling akurat)
+        const navLang = (navigator.language || navigator.userLanguage || "").toLowerCase().replace("-", "_");
+        const navPrefix = navLang.split("_")[0];
+        if (LOCALE_LANG_MAP[navLang]) return LOCALE_LANG_MAP[navLang];
+        if (LOCALE_LANG_MAP[navPrefix]) return LOCALE_LANG_MAP[navPrefix];
+
+        // 2. Coba dari timezone
+        try {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+          for (const rule of TZ_LANG_MAP) {
+            if (rule.match.test(tz)) return rule.lang;
+          }
+        } catch (e) {}
+
+        // 3. Fallback ID
+        return "id";
+      }
+
+      function setLang(newLang, isAuto) {
+        lang = newLang;
+        // update dropdown options
+        document.querySelectorAll(".lang-opt").forEach((b) => {
+          b.classList.toggle("active", b.dataset.lang === lang);
+        });
+        // update label
+        const labels = { id: "ID", en: "EN", ms: "MY", ar: "AR" };
+        document.getElementById("langLabel").textContent = labels[lang] || lang.toUpperCase();
+        applyI18n();
+        buildAll();
+        if (isAuto) document.documentElement.dataset.langAuto = lang;
+      }
+
+      // Deteksi dan terapkan bahasa otomatis
+      const autoLang = detectLang();
+      lang = autoLang;
+
+      /* ── LANG PICKER ── */
+      const langPicker = document.getElementById("langPicker");
+      const langCurrent = document.getElementById("langCurrent");
+
+      langCurrent.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = langPicker.classList.toggle("open");
+        langCurrent.setAttribute("aria-expanded", open);
+      });
+
+      document.querySelectorAll(".lang-opt").forEach((btn) => {
         btn.addEventListener("click", () => {
-          lang = btn.dataset.lang;
-          document
-            .querySelectorAll(".lang-btn")
-            .forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          applyI18n();
-          buildAll();
+          setLang(btn.dataset.lang, false);
+          langPicker.classList.remove("open");
+          langCurrent.setAttribute("aria-expanded", "false");
         });
       });
 
+      // tutup dropdown kalau klik di luar
+      document.addEventListener("click", () => {
+        langPicker.classList.remove("open");
+        langCurrent.setAttribute("aria-expanded", "false");
+      });
+
       /* ── INIT ── */
-      applyI18n();
-      buildAll();
+      setLang(autoLang, true);
     </script>
   </body>
 </html>
