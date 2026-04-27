@@ -298,14 +298,14 @@
       >
         <a href="/" class="topbar-logo">indway</a>
         <div class="topbar-actions">
-          <button
+          <!-- <button
             class="btn-icon"
             onclick="init(true)"
             title="Refresh Content"
             style="font-size: 15px; color: var(--muted)"
           >
             ↻
-          </button>
+          </button> -->
           <button
             class="btn-icon"
             id="themeBtn"
@@ -321,7 +321,7 @@
     <div class="wrap">
       <header id="main-header">
         <div class="hero-pre">indway@lab ~/diary %</div>
-        <div class="hero-name">Diary Entries</div>
+        <div class="hero-name">Indway's Diary</div>
       </header>
 
       <section id="list-view">
@@ -357,10 +357,40 @@
       </section>
 
       <footer>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
           <div>&copy; 2026 indway — Catatan Perjalanan Hidup.</div>
-          <a href="/feed.xml" target="_blank" style="color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 11px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+          <a
+            href="/feed.xml"
+            target="_blank"
+            style="
+              color: var(--muted);
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+              gap: 4px;
+              font-size: 11px;
+            "
+          >
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 11a9 9 0 0 1 9 9"></path>
+              <path d="M4 4a16 16 0 0 1 16 16"></path>
+              <circle cx="5" cy="19" r="1"></circle>
+            </svg>
             RSS Feed
           </a>
         </div>
@@ -403,15 +433,20 @@
       // --- CORE LOGIC ---
       async function init(force = false) {
         try {
-          const url = force ? `../scripts/diary.json?t=${new Date().getTime()}` : "../scripts/diary.json";
+          const url = force
+            ? `../scripts/diary.json?t=${new Date().getTime()}`
+            : "../scripts/diary.json";
           const response = await fetch(url);
           const data = await response.json();
           // Sort by date descending
           diaryData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
           if (force) {
             // Also force refresh markdown if currently viewing an entry
-            const currentSlug = window.location.pathname.split("/").filter(p => p.length > 0).pop();
-            const entry = diaryData.find(d => d.slug === currentSlug);
+            const currentSlug = window.location.pathname
+              .split("/")
+              .filter((p) => p.length > 0)
+              .pop();
+            const entry = diaryData.find((d) => d.slug === currentSlug);
             if (entry) showEntry(entry, true);
           }
           handleRoute();
@@ -425,13 +460,15 @@
       function handleRoute() {
         const path = window.location.pathname;
         const params = new URLSearchParams(window.location.search);
-        
+
         // Priority 1: Query param 'p' (from 404 redirect)
         // Priority 2: Direct path slug
-        const slug = params.get('p') || path
-          .split("/")
-          .filter((p) => p.length > 0)
-          .pop();
+        const slug =
+          params.get("p") ||
+          path
+            .split("/")
+            .filter((p) => p.length > 0)
+            .pop();
 
         if (slug && slug !== "diary" && slug !== "index.html") {
           const entry = diaryData.find((d) => d.slug === slug);
@@ -491,7 +528,9 @@
           .join("");
 
         try {
-          const mdUrl = force ? `../diary/${entry.slug}.md?t=${new Date().getTime()}` : `../diary/${entry.slug}.md`;
+          const mdUrl = force
+            ? `../diary/${entry.slug}.md?t=${new Date().getTime()}`
+            : `../diary/${entry.slug}.md`;
           const response = await fetch(mdUrl);
           const rawMarkdown = await response.text();
           const cleanMarkdown = rawMarkdown
