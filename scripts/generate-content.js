@@ -7,7 +7,7 @@ const { execSync } = require("child_process");
 // ─── Config ──────────────────────────────────────────────────────────────────
 
 const CONFIG = {
-  model: "gemini-2.0-flash-latest",
+  model: "gemini-3-flash-preview",
   maxRetries: 3,
   retryDelayMs: 2000,
   minContentLength: 200,

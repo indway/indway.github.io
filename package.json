@@ -8,7 +8,7 @@
     "llms": "node scripts/generate-llms.js",
     "diary": "node scripts/generate-diary.js",
     "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js",
-    "generate:content": "node scripts/generate-ai-content.js"
+    "generate:content": "node scripts/generate-content.js"
   },
   "keywords": [],
   "author": "",
