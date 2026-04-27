@@ -7,6 +7,7 @@ All notable changes to the **indway** project will be documented in this file.
 - **Public Repository Identity**: Restructured and translated `README.md` to English to clearly convey the lab's pragmatic, anti-perfectionism philosophy.
 
 ### Changed
+- **Editor Caching & Sync**: Implemented Stale-while-revalidate caching pattern in the `editor/index.html` (GitCMS). Diary files and lists now load instantly from local cache while silently syncing with the GitHub API in the background to ensure responsive editing.
 - **Frontmatter Parsing**: Improved custom parser in `generate-diary.js` to automatically strip quotation marks from YAML frontmatter strings.
 - **Data Standardization**: Standardized all `diary/*.md` frontmatters for cleaner parsing pipeline.
 

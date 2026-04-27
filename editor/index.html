@@ -467,12 +467,12 @@
         display: none;
       }
       #diary-meta summary::after {
-        content: '+';
+        content: "+";
         float: right;
         font-size: 14px;
       }
       #diary-meta[open] summary::after {
-        content: '-';
+        content: "-";
       }
       #diary-meta .fm-body {
         padding: 0 20px 20px 20px;
@@ -616,7 +616,7 @@
           id="fileSearch"
           class="v-input"
           placeholder="Cari diary..."
-          style="margin-bottom: 0;"
+          style="margin-bottom: 0"
           onkeyup="filterFiles()"
         />
       </div>
@@ -684,7 +684,19 @@
           >
             Run Generator
           </button>
-          <button id="togglePreviewBtn" onclick="toggleMdPreview()" style="display: none; width: auto; padding: 6px 12px; font-size: 11px; background: transparent; border: 1px solid var(--border); color: var(--fg);">
+          <button
+            id="togglePreviewBtn"
+            onclick="toggleMdPreview()"
+            style="
+              display: none;
+              width: auto;
+              padding: 6px 12px;
+              font-size: 11px;
+              background: transparent;
+              border: 1px solid var(--border);
+              color: var(--fg);
+            "
+          >
             Toggle Preview
           </button>
           <button id="themeBtn" title="Toggle Theme">☀️</button>
@@ -705,7 +717,7 @@
             onclick="saveFile()"
             style="width: auto; padding: 6px 15px; font-size: 11px"
           >
-            Save / Publish
+            Publish
           </button>
         </div>
       </div>
@@ -730,7 +742,11 @@
                 </div>
                 <div
                   class="v-group"
-                  style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px"
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 15px;
+                  "
                 >
                   <div>
                     <label class="v-label">Date</label>
@@ -1122,7 +1138,46 @@
         });
       }
 
+      function renderFilesUI(files) {
+        document.getElementById("file-list").innerHTML = `
+              <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
+              <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? "📝 " : ""}scripts/content.js</li>
+              <div style="padding:10px 20px; font-size:10px; color:var(--muted); border-bottom:1px solid var(--border)">DIARY FILES</div>
+              ${files
+                .filter((f) => f.name.endsWith(".md"))
+                .map((f) => {
+                  const isDraft = localStorage.getItem("draft_" + f.path);
+                  return `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${isDraft ? "📝 " : ""}${f.name}</li>`;
+                })
+                .join("")}
+            `;
+
+        // Append entirely local unsaved drafts that are not in Github API yet
+        Object.keys(localStorage).forEach((k) => {
+          if (k.startsWith("draft_diary/") && k.endsWith(".md")) {
+            const path = k.replace("draft_", "");
+            // If not in the fetched files, it's completely unsaved/new
+            if (!files.some((f) => f.path === path)) {
+              const li = document.createElement("li");
+              li.className = "file-item";
+              li.dataset.path = path;
+              li.textContent = `📝 [Draft] ${path.replace("diary/", "")}`;
+              li.onclick = () => loadFile(path);
+              if (currentFile.path === path) li.classList.add("active");
+              document.getElementById("file-list").appendChild(li);
+            }
+          }
+        });
+      }
+
       async function loadFileList() {
+        const cacheStr = localStorage.getItem("cache_dir_diary");
+        if (cacheStr) {
+          try {
+            renderFilesUI(JSON.parse(cacheStr));
+          } catch (e) {}
+        }
+
         try {
           let files = await ghFetch("diary");
           if (Array.isArray(files)) {
@@ -1130,35 +1185,8 @@
           } else {
             files = [];
           }
-          document.getElementById("file-list").innerHTML = `
-                <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
-                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? "📝 " : ""}scripts/content.js</li>
-                <div style="padding:10px 20px; font-size:10px; color:var(--muted); border-bottom:1px solid var(--border)">DIARY FILES</div>
-                ${files
-                  .filter((f) => f.name.endsWith(".md"))
-                  .map((f) => {
-                    const isDraft = localStorage.getItem("draft_" + f.path);
-                    return `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${isDraft ? "📝 " : ""}${f.name}</li>`;
-                  })
-                  .join("")}
-              `;
-
-          // Append entirely local unsaved drafts that are not in Github API yet
-          Object.keys(localStorage).forEach((k) => {
-            if (k.startsWith("draft_diary/") && k.endsWith(".md")) {
-              const path = k.replace("draft_", "");
-              // If not in the fetched files, it's completely unsaved/new
-              if (!files.some((f) => f.path === path)) {
-                const li = document.createElement("li");
-                li.className = "file-item";
-                li.dataset.path = path;
-                li.textContent = `📝 [Draft] ${path.replace("diary/", "")}`;
-                li.onclick = () => loadFile(path);
-                if (currentFile.path === path) li.classList.add("active");
-                document.getElementById("file-list").appendChild(li);
-              }
-            }
-          });
+          localStorage.setItem("cache_dir_diary", JSON.stringify(files));
+          renderFilesUI(files);
         } catch (e) {
           console.error(e);
         }
@@ -1166,28 +1194,63 @@
       async function loadFile(p) {
         document.getElementById("loading").style.display = "inline";
         const draft = localStorage.getItem("draft_" + p);
+        const cacheStr = localStorage.getItem("cache_" + p);
+        let cache = null;
+        try {
+          if (cacheStr) cache = JSON.parse(cacheStr);
+        } catch (e) {}
+
+        // 1. Instant load dari cache atau draft
+        if (cache || draft) {
+          currentFile = { path: p, sha: cache ? cache.sha : "" };
+          let showContent = cache ? cache.content : "";
+          if (draft && draft !== showContent) {
+            showContent = draft;
+            updateDraftIndicator(true);
+          } else {
+            updateDraftIndicator(false);
+          }
+          document.getElementById("code-editor").value = showContent;
+          finishLoadFile(p);
+        }
+
+        // 2. Sync ulang (Background fetch)
         try {
           const res = await ghFetch(p);
-          currentFile = { path: p, sha: res.sha };
-          const content = decodeURIComponent(
+          const newContent = decodeURIComponent(
             escape(window.atob(res.content.replace(/\n/g, ""))),
           );
 
-          document.getElementById("code-editor").value =
-            draft && draft !== content && confirm("Gunakan draf lokal?")
-              ? draft
-              : content;
-          updateDraftIndicator(!!draft && draft !== content);
-          finishLoadFile(p);
+          // Update cache
+          localStorage.setItem(
+            "cache_" + p,
+            JSON.stringify({
+              sha: res.sha,
+              content: newContent,
+            }),
+          );
+
+          // 3. Render ulang jika file masih aktif
+          if (currentFile.path === p) {
+            currentFile.sha = res.sha;
+
+            // Jika ada draft lokal yang berbeda dari content server, prioritaskan draft
+            if (draft && draft !== newContent) {
+              updateDraftIndicator(true);
+            } else {
+              // Jika tidak ada draft atau draft sama dengan content server, update UI jika content berbeda
+              if (document.getElementById("code-editor").value !== newContent) {
+                document.getElementById("code-editor").value = newContent;
+                finishLoadFile(p);
+                updateDraftIndicator(false);
+              }
+            }
+          }
         } catch (e) {
-          if (draft) {
-            currentFile = { path: p, sha: "" };
-            document.getElementById("code-editor").value = draft;
-            updateDraftIndicator(true);
-            finishLoadFile(p);
-          } else {
+          if (!cache && !draft) {
             alert("Gagal memuat file!");
           }
+          console.error("Sync error:", e);
         }
         document.getElementById("loading").style.display = "none";
       }
