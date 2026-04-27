@@ -1,31 +1,59 @@
 # indway
 
-indway adalah personal lab untuk membangun AI tools dan produk digital dari kebutuhan nyata. Sederhana, jujur, dan bisa langsung dipakai.
+> Membangun sistem cerdas dan solusi digital berdampak tinggi. Fokus pada integrasi AI, automasi, dan arsitektur produk yang skalabel.
 
-Link: https://indway.github.io
+- Role: AI-driven Solution Architect
+- Experience: 7+ years building digital products
+- Availability: Open to Remote / Freelance
+- Stack: Node.js, Python, React, Docker, PyTorch, Git
+- Services: AI Integration, System Architecture, Full-stack Dev, Automation
+- Link: https://indway.github.io
 
-## Products
+## Rates
 
-- ViGen: Video Generator dengan AI
-- GenSu: Si Pembuat Surat
-- Content Intelligence: Pembuat Konten Berdasarkan Insight
-- Indexer: Otomatis Indexing Website
-- 1826d: Catatan Perjalanan Hidup
-- lihatmami: Steganografi · seni @kodekeras.jpg
-- jadicms: Git Based Content Hub & Media Management
-- schlab.id: School as Living Lab
-- jadi.pw: Digital Product Marketplace & Productivity Tools
-- kampung.jadi.pw: Digitalisasi Warga Desa
-- refleksi.jadi.pw: Ruang Introspeksi Diri
-- KodeKeras Society: Productivity Tracking
-- monstroku: universe project · imajinasi dan kolaborasi ayah dan anak
-- ./pentest: blog template for hacker notes
-- Sekolahku: web template for school
-- BeterCut: Alternatif Netcut
-- Rp: a spying tools
+- Rp750.000/jam (perkiraan, tergantung proyek)
 
-## Diary entries
+## Contact & Socials
 
-- [2042026A](https://indway.github.io/diary/2042026A): ---
-- [2142026A](https://indway.github.io/diary/2142026A): ---
-- [2742026A](https://indway.github.io/diary/2742026A): ---
+- email: mailto:indway@duck.com
+- diary: /diary/
+- follow @indthatway: https://instagram.com/indthatway
+- desktop: https://kodekeras.my.id
+
+## Products (Lab)
+
+- 🟢 **ViGen**: Video Generator dengan AI [AI, Video, Generator]
+- 🟢 **GenSu**: Si Pembuat Surat [AI, Document, Automation]
+- 🟡 **Content Intelligence**: Pembuat Konten Berdasarkan Insight [AI, Content, Analytics]
+- 🟢 **Indexer**: Otomatis Indexing Website [SEO, Automation, Indexing]
+- 🟢 **1826d**: Catatan Perjalanan Hidup [Journal, Encrypted, Offline]
+- [lihatmami](https://instagram.com/kodekeras.jpg): Steganografi · seni @kodekeras.jpg [Art, Steganography, Creative]
+- 🟢 **jadicms**: Git Based Content Hub & Media Management [CMS, Git, No-DB]
+
+## Managed Websites
+
+- [schlab.id](https://schlab.id): School as Living Lab [Education, School, Innovation]
+- [jadi.pw](https://jadi.pw): Digital Product Marketplace & Productivity Tools [Marketplace, Digital, Productivity]
+  - [kampung.jadi.pw](https://kampung.jadi.pw): Digitalisasi Warga Desa
+  - [refleksi.jadi.pw](https://refleksi.jadi.pw): Ruang Introspeksi Diri
+- [KodeKeras Society](https://society.kodekeras.my.id): Productivity Tracking [Community, Productivity, Developer]
+
+## Side Projects
+
+- [monstroku](https://instagram.com/monstroku): universe project · imajinasi dan kolaborasi ayah dan anak [Family, Creative, Universe]
+
+## Web Themes
+
+- 🟢 **./pentest**: blog template for hacker notes [Dark Theme, Blog, Terminal]
+- 🟢 **Sekolahku**: web template for school [Education, Clean, Template]
+
+## Cybersecurity Tools
+
+- ⚪ **BeterCut**: Alternatif Netcut [Network, LAN, Monitor]
+- ⚪ **Rp**: a spying tools [Research, Security, Experimental]
+
+## Diary / Personal Log
+
+- [2042026A](https://indway.github.io/diary/2042026A): mulai dari mana ya?
+- [2142026A](https://indway.github.io/diary/2142026A): Hari ini konten diinternet itu sangat beragam macam
+- [2742026A](https://indway.github.io/diary/2742026A): ya kemarin saya ada kembangkan sebuah pendekatan baru bagi saya dalam pengembangan CMS, dengan git-based style.
