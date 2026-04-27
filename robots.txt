@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://indway.github.io/sitemap.xml

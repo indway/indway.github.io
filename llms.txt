@@ -1,0 +1,30 @@
+# indway
+
+indway adalah personal lab untuk membangun AI tools dan produk digital dari kebutuhan nyata. Sederhana, jujur, dan bisa langsung dipakai.
+
+Link: https://indway.github.io
+
+## Products
+
+- ViGen: Video Generator dengan AI
+- GenSu: Si Pembuat Surat
+- Content Intelligence: Pembuat Konten Berdasarkan Insight
+- Indexer: Otomatis Indexing Website
+- 1826d: Catatan Perjalanan Hidup
+- lihatmami: Steganografi · seni @kodekeras.jpg
+- jadicms: Git Based Content Hub & Media Management
+- schlab.id: School as Living Lab
+- jadi.pw: Digital Product Marketplace & Productivity Tools
+- kampung.jadi.pw: Digitalisasi Warga Desa
+- refleksi.jadi.pw: Ruang Introspeksi Diri
+- KodeKeras Society: Productivity Tracking
+- monstroku: universe project · imajinasi dan kolaborasi ayah dan anak
+- ./pentest: blog template for hacker notes
+- Sekolahku: web template for school
+- BeterCut: Alternatif Netcut
+- Rp: a spying tools
+
+## Diary entries
+
+- [2042026A](https://indway.github.io/diary/2042026A): ---
+- [2142026A](https://indway.github.io/diary/2142026A): Hari ini konten diinternet itu sangat beragam macam

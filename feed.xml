@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>indway — Diary</title>
+    <link>https://indway.github.io/diary/</link>
+    <description>Catatan Perjalanan Hidup dan Eksperimen Lab indway</description>
+    <language>id-id</language>
+    <lastBuildDate>Mon, 27 Apr 2026 03:47:48 GMT</lastBuildDate>
+    <atom:link href="https://indway.github.io/feed.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+        <title><![CDATA[Hari ini konten diinternet itu sangat beragam macam]]></title>
+        <link>https://indway.github.io/diary/2142026A</link>
+        <guid isPermaLink="true">https://indway.github.io/diary/2142026A</guid>
+        <pubDate>Mon, 27 Apr 2026 03:20:32 GMT</pubDate>
+        <description><![CDATA[Ada banyak orang yang tertipu dengan daya tipu bahasanya ada teknik yang kita kenal "Heuristik Bias" Heuristik bias adalah jalan pintas mental (aturan praktis) yang digunakan otak untuk mengambil kepu...]]></description>
+    </item>
+    <item>
+        <title><![CDATA[Memulai Langkah Baru]]></title>
+        <link>https://indway.github.io/diary/2042026A</link>
+        <guid isPermaLink="true">https://indway.github.io/diary/2042026A</guid>
+        <pubDate>Mon, 20 Apr 2026 00:00:00 GMT</pubDate>
+        <description><![CDATA[Sebuah refleksi tentang bagaimana memulai kembali dari awal tanpa beban perfectionism.]]></description>
+    </item>
+</channel>
+</rss>

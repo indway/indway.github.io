@@ -1,0 +1,15 @@
+{
+  "name": "indway",
+  "version": "1.0.0",
+  "description": "indway.github.io",
+  "main": "scripts/generate-sitemap.js",
+  "scripts": {
+    "sitemap": "node scripts/generate-sitemap.js",
+    "llms": "node scripts/generate-llms.js",
+    "diary": "node scripts/generate-diary.js",
+    "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

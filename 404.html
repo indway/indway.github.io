@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>indway — Lab</title>
+    <script type="text/javascript">
+      // 404 redirect for clean URLs on GitHub Pages
+      (function() {
+        var path = window.location.pathname;
+        // If it looks like a diary path, redirect to the diary index with the slug info
+        if (path.includes('/diary/')) {
+          // This will reload the page at /diary/, and handleRoute in diary/index.html 
+          // will pick up the slug from the URL. 
+          // Note: GitHub Pages will still serve this 404 if the folder doesn't exist.
+          // The best trick is to redirect to the diary index while preserving the path.
+          // Actually, we can just redirect to the target page and let it handle.
+          window.location.replace(window.location.href);
+        } else {
+          // Fallback to home
+          window.location.replace('/');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>

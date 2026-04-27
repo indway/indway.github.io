@@ -2,6 +2,23 @@
    indway 
 ───────────────────────────────────────────── */
 window.INDWAY_DATA = {
+  /* ── PROFILE ────────────────────────────── */
+  profile: {
+    title: "AI-driven Solution Architect",
+    bio: {
+      id: "Membangun sistem cerdas dan solusi digital berdampak tinggi. Fokus pada integrasi AI, automasi, dan arsitektur produk yang skalabel.",
+      en: "Crafting intelligent systems and high-impact digital solutions. Focused on AI integration, automation, and scalable product architecture.",
+    },
+    services: [
+      { id: "ser_ai", label: "AI Integration" },
+      { id: "ser_arch", label: "System Architecture" },
+      { id: "ser_web", label: "Full-stack Dev" },
+      { id: "ser_auto", label: "Automation" },
+    ],
+    stack: ["Node.js", "Python", "React", "Docker", "PyTorch", "Git"],
+    experience: "7+ years building digital products",
+    availability: "Open to Remote / Freelance",
+  },
 
   /* ── RATES ──────────────────────────────── */
   rates: {
@@ -454,6 +471,7 @@ window.INDWAY_DATA = {
   /* ── SOCIALS ─────────────────────────────── */
   socials: [
     { label: "email",              url: "mailto:indway@duck.com" },
+    { label: "diary",              url: "/diary/" },
     { label: "follow @indthatway", url: "https://instagram.com/indthatway" },
     { label: "desktop",            url: "https://kodekeras.my.id" },
   ],

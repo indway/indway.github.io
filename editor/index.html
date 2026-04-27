@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Editor — indway Lab</title>
+    <link rel="icon" href="../assets/favicon.svg" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@400;500;600;700&display=swap");
+
+      :root {
+        --bg: #ffffff;
+        --fg: #0c0c0c;
+        --muted: #666666;
+        --border: #f0f0f0;
+        --accent: #2ecc71;
+        --font-mono: "JetBrains Mono", monospace;
+        --sidebar-width: 280px;
+      }
+
+      [data-theme="dark"] {
+        --bg: #0c0c0c;
+        --fg: #f5f5f5;
+        --muted: #888888;
+        --border: #1a1a1a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+
+      /* ── LOGIN MODAL ── */
+      #login-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .login-box {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 40px;
+        width: 90%;
+        max-width: 400px;
+        border-radius: 8px;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+        color: var(--fg);
+        font-family: var(--font-mono);
+        outline: none;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+      [data-theme="dark"] input {
+        background: #111;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background: var(--fg);
+        color: var(--bg);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        border-radius: 4px;
+        transition: opacity 0.2s;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+
+      /* ── SIDEBAR ── */
+      aside {
+        width: var(--sidebar-width);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: var(--bg);
+        z-index: 50;
+        transition: transform 0.3s ease;
+      }
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .file-list {
+        flex: 1;
+        overflow-y: auto;
+        list-style: none;
+      }
+      .file-item {
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        transition: background 0.2s;
+        color: var(--muted);
+      }
+      .file-item:hover {
+        background: var(--border);
+        color: var(--fg);
+      }
+      .file-item.active {
+        background: var(--border);
+        color: var(--fg);
+        border-left: 3px solid var(--accent);
+      }
+
+      /* ── MAIN EDITOR ── */
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .toolbar {
+        height: 60px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        background: var(--bg);
+      }
+      #editor-title {
+        font-weight: 700;
+        color: var(--muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11px;
+      }
+      .editor-container {
+        flex: 1;
+        position: relative;
+      }
+      #code-editor {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 14px;
+        padding: 20px;
+        resize: none;
+        line-height: 1.6;
+        tab-size: 4;
+        outline: none;
+      }
+
+      .loading {
+        display: none;
+        color: var(--accent);
+        margin-right: 10px;
+        font-size: 10px;
+      }
+
+      /* Theme Toggle Icon */
+      #themeBtn {
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        color: var(--fg);
+        padding: 5px;
+        width: auto;
+      }
+
+      /* Mobile Hamburger */
+      #menuToggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--fg);
+        font-size: 20px;
+        cursor: pointer;
+        padding: 10px;
+        width: auto;
+      }
+
+      @media (max-width: 768px) {
+        aside {
+          position: fixed;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          transform: translateX(-100%);
+        }
+        aside.open {
+          transform: translateX(0);
+          box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+        }
+        #menuToggle {
+          display: block;
+        }
+        .toolbar {
+          padding: 0 10px;
+        }
+        #code-editor {
+          padding: 20px 15px;
+          font-size: 13px;
+        }
+      }
+
+      .flex {
+        display: flex;
+        align-items: center;
+      }
+      .gap {
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="login-overlay">
+      <div class="login-box" id="login-main">
+        <h2 style="margin-bottom: 20px">Lab Command Center</h2>
+        <p style="margin-bottom: 20px; font-size: 11px; color: var(--muted)">
+          Masukan Username & Token/Katasandi untuk sinkronisasi konten lab.
+        </p>
+        <input type="text" id="owner" placeholder="GitHub Username" value="indway" />
+        <input type="password" id="token" placeholder="Token atau Katasandi Alias" />
+        <button onclick="login()">Initialize Session</button>
+        <p style="margin-top: 15px; text-align: center;">
+            <a href="#" onclick="showVault()" style="color: var(--muted); font-size: 10px; text-decoration: none;">Manage Token Aliases (Katasandi)</a>
+        </p>
+      </div>
+
+      <div class="login-box" id="login-vault" style="display: none;">
+        <h2 style="margin-bottom: 20px">Alias Vault</h2>
+        <p style="margin-bottom: 20px; font-size: 11px; color: var(--muted)">Simpan token panjang Anda dengan Katasandi yang mudah (Hanya tersimpan di browser ini).</p>
+        <input type="text" id="v-alias" placeholder="Nama Katasandi (misal: labku)" />
+        <input type="password" id="v-token" placeholder="Token GitHub (ghp_...)" />
+        <div class="flex gap">
+            <button onclick="saveAlias()" style="background: var(--accent); color: white;">Simpan Katasandi</button>
+            <button onclick="showLogin()" style="background: transparent; color: var(--muted); border: 1px solid var(--border);">Kembali</button>
+        </div>
+        <div id="alias-list" style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 10px; font-size: 10px; color: var(--muted);"></div>
+      </div>
+    </div>
+
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <span>CONTENTS</span>
+        <button
+          id="menuClose"
+          onclick="toggleSidebar()"
+          style="
+            display: none;
+            width: auto;
+            background: none;
+            color: var(--fg);
+            font-size: 20px;
+          "
+        >
+          &times;
+        </button>
+      </div>
+      <ul class="file-list" id="file-list">
+        <li class="file-item" onclick="createNewDiary()">
+          [+] New Diary Entry
+        </li>
+        <li
+          class="file-item"
+          data-path="scripts/content.js"
+          onclick="loadFile('scripts/content.js')"
+        >
+          scripts/content.js
+        </li>
+        <div
+          style="
+            padding: 10px 20px;
+            font-size: 10px;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+          "
+        >
+          DIARY FILES
+        </div>
+      </ul>
+      <div style="padding: 20px; border-top: 1px solid var(--border)">
+        <button
+          onclick="logout()"
+          style="
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+          "
+        >
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <div class="flex gap">
+          <button id="menuToggle" onclick="toggleSidebar()">☰</button>
+          <div id="editor-title">No file selected</div>
+        </div>
+        <div class="flex gap">
+          <span class="loading" id="loading">Syncing...</span>
+          <a
+            id="buildStatus"
+            target="_blank"
+            style="font-size: 10px; color: var(--muted); text-decoration: none"
+            >Build Status ↗</a
+          >
+          <button
+            onclick="triggerWorkflow()"
+            style="
+              width: auto;
+              padding: 6px 12px;
+              font-size: 11px;
+              background: transparent;
+              border: 1px solid var(--border);
+              color: var(--fg);
+            "
+          >
+            Run Generator
+          </button>
+          <button id="themeBtn" title="Toggle Theme">☀️</button>
+          <button
+            onclick="saveFile()"
+            style="width: auto; padding: 6px 15px; font-size: 11px"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+      <div class="editor-container">
+        <textarea
+          id="code-editor"
+          spellcheck="false"
+          placeholder="Start writing hardware secrets..."
+        ></textarea>
+      </div>
+    </main>
+
+    <script>
+      // --- THEME & UI LOGIC ---
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("open");
+        document.getElementById("menuClose").style.display =
+          sidebar.classList.contains("open") ? "block" : "none";
+      }
+
+      function getAutoTheme() {
+        const hour = new Date().getHours();
+        return hour >= 6 && hour < 18 ? "light" : "dark";
+      }
+
+      function applyTheme(mode) {
+        const isDark = mode === "dark";
+        document.documentElement.setAttribute(
+          "data-theme",
+          isDark ? "dark" : "",
+        );
+        const btn = document.getElementById("themeBtn");
+        if (btn) btn.textContent = isDark ? "🌙" : "☀️";
+      }
+
+      const savedTheme = localStorage.getItem("theme") || getAutoTheme();
+      applyTheme(savedTheme);
+
+      document.getElementById("themeBtn").addEventListener("click", () => {
+        const current =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "light"
+            : "dark";
+        localStorage.setItem("theme", current);
+        applyTheme(current);
+      });
+
+      // --- VAULT LOGIC ---
+      function showVault() {
+        document.getElementById('login-main').style.display = 'none';
+        document.getElementById('login-vault').style.display = 'block';
+        renderAliasList();
+      }
+      function showLogin() {
+        document.getElementById('login-main').style.display = 'block';
+        document.getElementById('login-vault').style.display = 'none';
+      }
+      function saveAlias() {
+        const alias = document.getElementById('v-alias').value.trim();
+        const token = document.getElementById('v-token').value.trim();
+        if (!alias || !token) return alert('Input required');
+        
+        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        vault[alias] = token;
+        localStorage.setItem('lab_vault', JSON.stringify(vault));
+        document.getElementById('v-alias').value = '';
+        document.getElementById('v-token').value = '';
+        renderAliasList();
+        alert('Katasandi berhasil disimpan!');
+      }
+      function renderAliasList() {
+        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        const list = Object.keys(vault).map(k => `<div>• ${k} <a href="#" onclick="deleteAlias('${k}')" style="color:red; margin-left:5px; text-decoration:none;">&times;</a></div>`).join('');
+        document.getElementById('alias-list').innerHTML = list || 'Belum ada Katasandi yang didaftarkan.';
+      }
+      function deleteAlias(k) {
+        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        delete vault[k];
+        localStorage.setItem('lab_vault', JSON.stringify(vault));
+        renderAliasList();
+      }
+
+      // --- CORE GH LOGIC ---
+      let config = { token: "", owner: "", repo: "" };
+      let currentFile = { path: "", sha: "" };
+
+      function login() {
+        const inputToken = document.getElementById("token").value.trim();
+        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        
+        // Resolve Alias or use raw token
+        config.token = vault[inputToken] || inputToken;
+        config.owner = document.getElementById("owner").value;
+        config.repo = "indway.github.io";
+
+        if (!config.token) return alert("Token/Katasandi required");
+
+        localStorage.setItem("lab_cms", JSON.stringify(config));
+        document.getElementById("login-overlay").style.display = "none";
+        document.getElementById("buildStatus").href =
+          `https://github.com/${config.owner}/${config.repo}/actions`;
+        loadFileList();
+      }
+
+      async function triggerWorkflow() {
+        if (!confirm("Jalankan generator manual (Sitemap, RSS, Diary)?"))
+          return;
+        document.getElementById("loading").style.display = "inline";
+
+        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/actions/workflows/generate.yml/dispatches`;
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `token ${config.token}`,
+            Accept: "application/vnd.github.v3+json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ref: "main" }),
+        });
+
+        if (res.ok) {
+          alert("Pemicu berhasil! Tunggu sekitar 1 menit untuk update data.");
+        } else {
+          const err = await res.json();
+          alert("Gagal: " + err.message);
+        }
+        document.getElementById("loading").style.display = "none";
+      }
+
+      function logout() {
+        localStorage.removeItem("lab_cms");
+        location.reload();
+      }
+
+      async function ghFetch(path, options = {}) {
+        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            Authorization: `token ${config.token}`,
+            Accept: "application/vnd.github.v3+json",
+            ...options.headers,
+          },
+        });
+        if (res.status === 401) logout();
+        return res.json();
+      }
+
+      async function loadFileList() {
+        const files = await ghFetch("diary");
+        const listEl = document.getElementById("file-list");
+
+        // Keep the manual entries
+        const manualHtml = `
+                <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
+                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">scripts/content.js</li>
+                <div style="padding: 10px 20px; font-size: 10px; color: var(--muted); border-bottom: 1px solid var(--border);">DIARY FILES</div>
+            `;
+
+        const diaryHtml = files
+          .filter((f) => f.name.endsWith(".md"))
+          .map(
+            (f) =>
+              `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${f.name}</li>`,
+          )
+          .join("");
+
+        listEl.innerHTML = manualHtml + diaryHtml;
+      }
+
+      async function loadFile(path) {
+        document.getElementById("loading").style.display = "inline";
+        try {
+          const data = await ghFetch(path);
+
+          currentFile.path = path;
+          currentFile.sha = data.sha;
+
+          const content = decodeURIComponent(
+            escape(window.atob(data.content.replace(/\n/g, ""))),
+          );
+          document.getElementById("code-editor").value = content;
+          document.getElementById("editor-title").textContent = path;
+        } catch (err) {
+          console.error(err);
+          alert("Gagal memuat file: Pastikan file ada dan token valid.");
+        }
+        document.getElementById("loading").style.display = "none";
+
+        // Active state
+        document
+          .querySelectorAll(".file-item")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelector(`[data-path="${path}"]`)
+          ?.classList.add("active");
+
+        // Close sidebar if mobile
+        if (window.innerWidth <= 768) toggleSidebar();
+      }
+
+      async function saveFile() {
+        if (!currentFile.path) return alert("Select a file first");
+
+        const content = document.getElementById("code-editor").value;
+        const message = prompt(
+          "Commit message:",
+          `Update ${currentFile.path.split("/").pop()}`,
+        );
+        if (!message) return;
+
+        document.getElementById("loading").style.display = "inline";
+
+        const body = {
+          message: message,
+          content: btoa(unescape(encodeURIComponent(content))),
+          sha: currentFile.sha,
+        };
+
+        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`;
+        const res = await fetch(url, {
+          method: "PUT",
+          headers: {
+            Authorization: `token ${config.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          currentFile.sha = result.content.sha;
+          alert("Success! GitHub Action will trigger soon.");
+          loadFileList();
+        } else {
+          alert("Error: " + result.message);
+        }
+        document.getElementById("loading").style.display = "none";
+      }
+
+      function createNewDiary() {
+        const title = prompt("Entry Title:");
+        if (!title) return;
+        const date = new Date().toISOString().split("T")[0];
+        const cleanTitle = title
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "-")
+          .replace(/-+/g, "-");
+        const slug = cleanTitle;
+        const filename = `${slug.toUpperCase()}.md`; // Following your pattern 2042026A.md or slug.md
+
+        const template = `---
+title: "${title}"
+date: "${date}"
+excerpt: "Enter a short summary here..."
+tags: ["Lab", "Update"]
+---
+
+# ${title}
+
+Pikiran hari ini...
+`;
+        currentFile.path = `diary/${filename}`;
+        currentFile.sha = ""; // New file has no SHA
+        document.getElementById("code-editor").value = template;
+        document.getElementById("editor-title").textContent =
+          `Creating: ${currentFile.path}`;
+      }
+
+      // Init
+      const saved = localStorage.getItem("lab_cms");
+      if (saved) {
+        config = JSON.parse(saved);
+        document.getElementById("login-overlay").style.display = "none";
+        document.getElementById("buildStatus").href =
+          `https://github.com/${config.owner}/${config.repo}/actions`;
+        loadFileList();
+      }
+
+      // Handle Tab key
+      document
+        .getElementById("code-editor")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Tab") {
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            this.value =
+              this.value.substring(0, start) + "\t" + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 1;
+          }
+        });
+    </script>
+  </body>
+</html>
