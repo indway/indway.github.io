@@ -1,0 +1,130 @@
+# indway
+
+> Membangun sistem cerdas dan solusi digital berdampak tinggi. Fokus pada integrasi AI, automasi, dan arsitektur produk yang skalabel.
+
+- Role: AI-driven Solution Architect
+- Experience: 7+ years building digital products
+- Availability: Open to Remote / Freelance
+- Stack: Node.js, Python, React, Docker, PyTorch, Git
+- Services: AI Integration, System Architecture, Full-stack Dev, Automation
+- Link: https://indway.github.io
+
+## Rates
+
+- Rp750.000/jam (perkiraan, tergantung proyek)
+
+## Contact & Socials
+
+- email: mailto:indway@duck.com
+- diary: /diary/
+- follow @indthatway: https://instagram.com/indthatway
+- desktop: https://kodekeras.my.id
+
+## Products (Lab)
+
+### 🟢 ViGen · ai · video
+**Video Generator dengan AI**
+Tool untuk membuat video otomatis dari teks atau data menggunakan model AI. Cocok untuk konten sosial media, presentasi, dan marketing.
+Tags: [AI, Video, Generator]
+
+### 🟢 GenSu · ai · document
+**Si Pembuat Surat**
+Generator dokumen dan surat resmi berbasis AI. Dari surat lamaran kerja, proposal, kontrak, hingga laporan — cukup isi template, AI yang tulis.
+Tags: [AI, Document, Automation]
+
+### 🟡 Content Intelligence · ai · content
+**Pembuat Konten Berdasarkan Insight**
+Platform yang menganalisis tren, data audiens, dan kompetitor untuk menghasilkan konten yang relevan dan berdampak tinggi.
+Tags: [AI, Content, Analytics]
+
+### 🟢 Indexer · seo · automation
+**Otomatis Indexing Website**
+Tool untuk mengotomasi proses indexing halaman website ke mesin pencari. Submit sitemap, ping URL, dan monitor status indexing dalam satu dashboard.
+Tags: [SEO, Automation, Indexing]
+
+### 🟢 1826d · productivity · journal
+**Catatan Perjalanan Hidup**
+Journal digital pribadi yang aman dan terenkripsi. 1826 hari = 5 tahun perjalanan hidup. Simpan momen, pikiran, dan refleksi harian dengan enkripsi AES-256.
+Tags: [Journal, Encrypted, Offline]
+
+### 🟢 lihatmami · art · steganography
+**Steganografi · seni @kodekeras.jpg**
+Eksperimen menyembunyikan data di dalam gambar seni. Kolaborasi antara kode dan estetika visual dari akun @kodekeras.jpg.
+URL: https://instagram.com/kodekeras.jpg
+Tags: [Art, Steganography, Creative]
+
+### 🟢 jadicms · cms · git
+**Git Based Content Hub & Media Management**
+CMS berbasis Git untuk mengelola konten dan media. Tidak perlu database — semua tersimpan di repository. Cocok untuk tim kecil dan developer.
+Tags: [CMS, Git, No-DB]
+
+
+## Managed Websites
+
+### 🟢 schlab.id · education
+**School as Living Lab**
+Platform untuk sekolah yang ingin menjadi laboratorium hidup — tempat belajar, bereksperimen, dan berinovasi bersama siswa.
+URL: https://schlab.id
+Tags: [Education, School, Innovation]
+
+### 🟢 jadi.pw · marketplace · tools
+**Digital Product Marketplace & Productivity Tools**
+Marketplace untuk produk digital dan tools produktivitas. Jual template, tools, dan konten digital dengan sistem pembayaran terintegrasi.
+URL: https://jadi.pw
+Tags: [Marketplace, Digital, Productivity]
+  - [kampung.jadi.pw](https://kampung.jadi.pw) — Digitalisasi Warga Desa
+  - [refleksi.jadi.pw](https://refleksi.jadi.pw) — Ruang Introspeksi Diri
+
+### 🟢 KodeKeras Society · community · productivity
+**Productivity Tracking**
+Komunitas produktivitas untuk developer dan kreator. Track progress, berbagi insight, dan saling mendorong mencapai target.
+URL: https://society.kodekeras.my.id
+Tags: [Community, Productivity, Developer]
+
+
+## Side Projects
+
+### 🟢 monstroku · universe · family
+**universe project · imajinasi dan kolaborasi ayah dan anak**
+Proyek semesta — eksplorasi imajinasi bersama anak. Karakter, dunia, dan cerita yang dibangun bersama sebagai warisan kreativitas keluarga.
+URL: https://instagram.com/monstroku
+Tags: [Family, Creative, Universe]
+
+
+## Web Themes
+
+### 🟢 ./pentest · web theme · dark
+**blog template for hacker notes**
+Template blog dengan estetika terminal dan hacker. Warna gelap, font monospace, cocok untuk catatan keamanan siber atau dev notes.
+Tags: [Dark Theme, Blog, Terminal]
+
+### 🟢 Sekolahku · web theme · education
+**web template for school**
+Template website sekolah yang bersih, modern, dan mudah dikustomisasi. Tersedia halaman profil, akademik, berita, dan PPDB.
+Tags: [Education, Clean, Template]
+
+
+## Cybersecurity Tools
+
+### ⚪ BeterCut · network · tool
+**Alternatif Netcut**
+Tool manajemen jaringan lokal. Alternatif Netcut dengan fitur monitoring dan kontrol koneksi perangkat di jaringan yang sama.
+Tags: [Network, LAN, Monitor]
+
+### ⚪ Rp · security · research
+**a spying tools**
+Tool eksperimen untuk keperluan riset keamanan. Dibuat untuk memahami mekanisme spyware dan cara melindungi diri darinya.
+Tags: [Research, Security, Experimental]
+
+
+## Diary / Personal Log
+
+### [2042026A](https://indway.github.io/diary/2042026A)
+mulai dari mana ya?
+
+### [2142026A](https://indway.github.io/diary/2142026A)
+Hari ini konten diinternet itu sangat beragam macam
+
+### [2742026A](https://indway.github.io/diary/2742026A)
+ya kemarin saya ada kembangkan sebuah pendekatan baru bagi saya dalam pengembangan CMS, dengan git-based style.
+
