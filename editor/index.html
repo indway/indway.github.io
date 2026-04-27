@@ -163,8 +163,10 @@
       .editor-container {
         flex: 1;
         position: relative;
+        overflow: hidden;
       }
-      #code-editor {
+      #code-editor,
+      #visual-editor {
         width: 100%;
         height: 100%;
         border: none;
@@ -177,6 +179,72 @@
         line-height: 1.6;
         tab-size: 4;
         outline: none;
+      }
+      #visual-editor {
+        display: none;
+        overflow-y: auto;
+        background: var(--bg);
+        padding-bottom: 100px;
+      }
+      .visual-section {
+        max-width: 800px;
+        margin: 0 auto 40px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .visual-section-header {
+        padding: 15px 20px;
+        background: var(--border);
+        font-weight: 700;
+        font-size: 11px;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+      }
+      .visual-item {
+        padding: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .visual-item:last-child {
+        border-bottom: none;
+      }
+      .v-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      .v-label {
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 5px;
+        display: block;
+      }
+      .v-input {
+        width: 100%;
+        padding: 8px 12px;
+        background: var(--border);
+        border: 1px solid transparent;
+        color: var(--fg);
+        border-radius: 4px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+      .v-input:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+
+      #draft-indicator {
+        display: none;
+        background: #f39c12;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 9px;
+        font-weight: bold;
+        margin-right: 10px;
       }
 
       .loading {
@@ -233,12 +301,154 @@
         }
       }
 
-      .flex {
+      .tab-btn {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        transition: 0.2s;
+        padding: 8px 16px;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid transparent;
+      }
+      .tab-btn:hover {
+        color: var(--fg);
+      }
+      .tab-btn.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+
+      .lang-switcher {
+        display: flex;
+        background: var(--border);
+        padding: 3px;
+        border-radius: 6px;
+        gap: 2px;
+      }
+      .lang-btn {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        padding: 4px 10px;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .lang-btn.active {
+        background: var(--bg);
+        color: var(--accent);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        transition: 0.3s;
+      }
+      .card:hover {
+        border-color: var(--accent);
+      }
+      .card-header {
+        padding: 15px 20px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
       }
-      .gap {
-        gap: 10px;
+      .card-body {
+        padding: 0 20px 20px;
+        display: none;
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
+      }
+      .card.expanded .card-body {
+        display: block;
+      }
+
+      .v-group {
+        margin-bottom: 15px;
+      }
+      .v-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
+        display: block;
+        font-weight: 700;
+      }
+      .v-input {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 10px 14px;
+        border-radius: 8px;
+        width: 100%;
+        color: var(--fg);
+        font-size: 13px;
+        transition: 0.2s;
+      }
+      .v-input:focus {
+        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.05);
+        outline: none;
+      }
+
+      /* Markdown & Diary Styles */
+      .md-editor-container {
+        display: none;
+        height: 100%;
+        grid-template-columns: 1fr 1fr;
+        background: var(--bg);
+      }
+      .md-writer {
+        padding: 40px;
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .md-preview {
+        padding: 40px;
+        overflow-y: auto;
+        background: var(--bg);
+        font-family: "Inter", sans-serif;
+        line-height: 1.8;
+      }
+      #diary-meta {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+      .writer-textarea {
+        flex: 1;
+        width: 100%;
+        min-height: 500px;
+        background: transparent;
+        border: none;
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 15px;
+        line-height: 1.7;
+        resize: none;
+        outline: none;
+        padding: 0;
+      }
+
+      @media (max-width: 900px) {
+        .md-editor-container {
+          grid-template-columns: 1fr;
+        }
+        .md-preview {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -249,24 +459,72 @@
         <p style="margin-bottom: 20px; font-size: 11px; color: var(--muted)">
           Masukan Username & Token/Katasandi untuk sinkronisasi konten lab.
         </p>
-        <input type="text" id="owner" placeholder="GitHub Username" value="indway" />
-        <input type="password" id="token" placeholder="Token atau Katasandi Alias" />
+        <input
+          type="text"
+          id="owner"
+          placeholder="GitHub Username"
+          value="indway"
+        />
+        <input
+          type="password"
+          id="token"
+          placeholder="Token atau Katasandi Alias"
+        />
         <button onclick="login()">Initialize Session</button>
-        <p style="margin-top: 15px; text-align: center;">
-            <a href="#" onclick="showVault()" style="color: var(--muted); font-size: 10px; text-decoration: none;">Manage Token Aliases (Katasandi)</a>
+        <p style="margin-top: 15px; text-align: center">
+          <a
+            href="#"
+            onclick="showVault()"
+            style="color: var(--muted); font-size: 10px; text-decoration: none"
+            >Manage Token Aliases (Katasandi)</a
+          >
         </p>
       </div>
 
-      <div class="login-box" id="login-vault" style="display: none;">
+      <div class="login-box" id="login-vault" style="display: none">
         <h2 style="margin-bottom: 20px">Alias Vault</h2>
-        <p style="margin-bottom: 20px; font-size: 11px; color: var(--muted)">Simpan token panjang Anda dengan Katasandi yang mudah (Hanya tersimpan di browser ini).</p>
-        <input type="text" id="v-alias" placeholder="Nama Katasandi (misal: labku)" />
-        <input type="password" id="v-token" placeholder="Token GitHub (ghp_...)" />
+        <p style="margin-bottom: 20px; font-size: 11px; color: var(--muted)">
+          Simpan token panjang Anda dengan Katasandi yang mudah (Hanya tersimpan
+          di browser ini).
+        </p>
+        <input
+          type="text"
+          id="v-alias"
+          placeholder="Nama Katasandi (misal: labku)"
+        />
+        <input
+          type="password"
+          id="v-token"
+          placeholder="Token GitHub (ghp_...)"
+        />
         <div class="flex gap">
-            <button onclick="saveAlias()" style="background: var(--accent); color: white;">Simpan Katasandi</button>
-            <button onclick="showLogin()" style="background: transparent; color: var(--muted); border: 1px solid var(--border);">Kembali</button>
+          <button
+            onclick="saveAlias()"
+            style="background: var(--accent); color: white"
+          >
+            Simpan Katasandi
+          </button>
+          <button
+            onclick="showLogin()"
+            style="
+              background: transparent;
+              color: var(--muted);
+              border: 1px solid var(--border);
+            "
+          >
+            Kembali
+          </button>
         </div>
-        <div id="alias-list" style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 10px; font-size: 10px; color: var(--muted);"></div>
+        <div
+          id="alias-list"
+          style="
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            font-size: 10px;
+            color: var(--muted);
+          "
+        ></div>
       </div>
     </div>
 
@@ -330,6 +588,7 @@
           <div id="editor-title">No file selected</div>
         </div>
         <div class="flex gap">
+          <span id="draft-indicator">DRAFT</span>
           <span class="loading" id="loading">Syncing...</span>
           <a
             id="buildStatus"
@@ -352,10 +611,16 @@
           </button>
           <button id="themeBtn" title="Toggle Theme">☀️</button>
           <button
+            onclick="deleteFile()"
+            style="width: auto; padding: 6px 15px; font-size: 11px; background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.2);"
+          >
+            Delete
+          </button>
+          <button
             onclick="saveFile()"
             style="width: auto; padding: 6px 15px; font-size: 11px"
           >
-            Save
+            Save / Publish
           </button>
         </div>
       </div>
@@ -364,10 +629,41 @@
           id="code-editor"
           spellcheck="false"
           placeholder="Start writing hardware secrets..."
+          oninput="autosave()"
         ></textarea>
+        <div id="visual-editor">
+          <!-- Visual form injected here -->
+        </div>
+        <div id="md-editor" class="md-editor-container">
+          <div class="md-writer">
+            <div id="diary-meta">
+              <div class="v-group">
+                <label class="v-label">Title</label>
+                <input class="v-input" id="fm-title" oninput="updateFM()" />
+              </div>
+              <div class="v-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                  <label class="v-label">Date</label>
+                  <input type="date" class="v-input" id="fm-date" oninput="updateFM()" />
+                </div>
+                <div>
+                  <label class="v-label">Slug</label>
+                  <input class="v-input" id="fm-slug" oninput="updateFM()" />
+                </div>
+              </div>
+              <div class="v-group">
+                <label class="v-label">Categories</label>
+                <input class="v-input" id="fm-cats" oninput="updateFM()" placeholder="Update, Thoughts..." />
+              </div>
+            </div>
+            <textarea id="md-body" class="writer-textarea" placeholder="Tulis cerita hari ini..." oninput="updateFM()"></textarea>
+          </div>
+          <div class="md-preview" id="md-preview"></div>
+        </div>
       </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
       // --- THEME & UI LOGIC ---
       function toggleSidebar() {
@@ -406,224 +702,542 @@
 
       // --- VAULT LOGIC ---
       function showVault() {
-        document.getElementById('login-main').style.display = 'none';
-        document.getElementById('login-vault').style.display = 'block';
+        document.getElementById("login-main").style.display = "none";
+        document.getElementById("login-vault").style.display = "block";
         renderAliasList();
       }
       function showLogin() {
-        document.getElementById('login-main').style.display = 'block';
-        document.getElementById('login-vault').style.display = 'none';
+        document.getElementById("login-main").style.display = "block";
+        document.getElementById("login-vault").style.display = "none";
       }
       function saveAlias() {
-        const alias = document.getElementById('v-alias').value.trim();
-        const token = document.getElementById('v-token').value.trim();
-        if (!alias || !token) return alert('Input required');
-        
-        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        const alias = document.getElementById("v-alias").value.trim();
+        const token = document.getElementById("v-token").value.trim();
+        if (!alias || !token) return alert("Input required");
+
+        const vault = JSON.parse(localStorage.getItem("lab_vault") || "{}");
         vault[alias] = token;
-        localStorage.setItem('lab_vault', JSON.stringify(vault));
-        document.getElementById('v-alias').value = '';
-        document.getElementById('v-token').value = '';
+        localStorage.setItem("lab_vault", JSON.stringify(vault));
+        document.getElementById("v-alias").value = "";
+        document.getElementById("v-token").value = "";
         renderAliasList();
-        alert('Katasandi berhasil disimpan!');
+        alert("Katasandi berhasil disimpan!");
       }
       function renderAliasList() {
-        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
-        const list = Object.keys(vault).map(k => `<div>• ${k} <a href="#" onclick="deleteAlias('${k}')" style="color:red; margin-left:5px; text-decoration:none;">&times;</a></div>`).join('');
-        document.getElementById('alias-list').innerHTML = list || 'Belum ada Katasandi yang didaftarkan.';
+        const vault = JSON.parse(localStorage.getItem("lab_vault") || "{}");
+        const list = Object.keys(vault)
+          .map(
+            (k) =>
+              `<div>• ${k} <a href="#" onclick="deleteAlias('${k}')" style="color:red; margin-left:5px; text-decoration:none;">&times;</a></div>`,
+          )
+          .join("");
+        document.getElementById("alias-list").innerHTML =
+          list || "Belum ada Katasandi yang didaftarkan.";
       }
       function deleteAlias(k) {
-        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
+        const vault = JSON.parse(localStorage.getItem("lab_vault") || "{}");
         delete vault[k];
-        localStorage.setItem('lab_vault', JSON.stringify(vault));
+        localStorage.setItem("lab_vault", JSON.stringify(vault));
         renderAliasList();
       }
 
       // --- CORE GH LOGIC ---
       let config = { token: "", owner: "", repo: "" };
       let currentFile = { path: "", sha: "" };
+      window.currentVisualData = null;
+      window.currentVisualLang = "id";
 
+      const updateDraftIndicator = (s) => {
+        const el = document.getElementById("draft-indicator");
+        if (el) el.style.display = s ? "inline" : "none";
+      };
+
+      const autosave = () => {
+        if (!currentFile.path) return;
+        const val = document.getElementById("code-editor").value;
+        localStorage.setItem("draft_" + currentFile.path, val);
+        updateDraftIndicator(true);
+      };
+
+      const showTab = (id) => {
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((c) => (c.style.display = "none"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        const target = document.getElementById("tab-" + id);
+        if (target) target.style.display = "block";
+        const btn = document.querySelector(`[data-tab="${id}"]`);
+        if (btn) btn.classList.add("active");
+      };
+
+      const setVisualLang = (l) => {
+        window.currentVisualLang = l;
+        renderVisualForm(window.currentVisualData);
+      };
+
+      // --- MARKDOWN ZEN ENGINE ---
+      function setupMarkdownEditor() {
+        const mdEditor = document.getElementById("md-editor");
+        mdEditor.style.display = "grid";
+        document.getElementById("code-editor").style.display = "none";
+        document.getElementById("visual-editor").style.display = "none";
+
+        const raw = document.getElementById("code-editor").value;
+        const fmMatch = raw.match(/^---\s*([\s\S]*?)---\s*([\s\S]*)$/);
+        if (fmMatch) {
+          const fmRaw = fmMatch[1],
+            body = fmMatch[2];
+          const gv = (k) =>
+            (fmRaw.match(new RegExp(`${k}:\\s*(.*)`)) || [])[1]?.trim() || "";
+          document.getElementById("fm-title").value = gv("title").replace(
+            /"/g,
+            "",
+          );
+          document.getElementById("fm-date").value = gv("date").replace(
+            /"/g,
+            "",
+          );
+          document.getElementById("fm-slug").value = gv("slug");
+          document.getElementById("fm-cats").value = gv("categories").replace(
+            /[\[\]"]/g,
+            "",
+          );
+          document.getElementById("md-body").value = body.trim();
+        } else {
+          document.getElementById("md-body").value = raw;
+        }
+        updateMarkdownPreview();
+      }
+      function updateEditorFromWriter() {
+        const t = document.getElementById("fm-title").value;
+        const d = document.getElementById("fm-date").value;
+        const s = document.getElementById("fm-slug").value;
+        const c = document
+          .getElementById("fm-cats")
+          .value.split(",")
+          .map((x) => `"${x.trim()}"`)
+          .join(", ");
+        const b = document.getElementById("md-body").value;
+        document.getElementById("code-editor").value =
+          `---\ntitle: "${t}"\ndate: "${d}"\nslug: "${s}"\ncategories: [${c}]\n---\n\n${b}`;
+        autosave();
+        updateMarkdownPreview();
+      }
+      function updateMarkdownPreview() {
+        document.getElementById("md-preview").innerHTML = marked.parse(
+          document.getElementById("md-body").value,
+        );
+      }
+      function updateFM() {
+        updateEditorFromWriter();
+      }
+
+      // --- VISUAL ENGINE ---
+      function setupVisualEditor() {
+        document.getElementById("code-editor").style.display = "none";
+        document.getElementById("md-editor").style.display = "none";
+        const ve = document.getElementById("visual-editor");
+        ve.style.display = "block";
+        try {
+          const raw = document.getElementById("code-editor").value;
+          const m = raw.match(/window\.INDWAY_DATA\s*=\s*(\{[\s\S]*\});/);
+          window.currentVisualData = new Function(`return ${m[1]}`)();
+          renderVisualForm(window.currentVisualData);
+        } catch (e) {
+          ve.innerHTML = `<p style="padding:20px; color:red">Format content.js tidak valid</p>`;
+        }
+      }
+      function renderVisualForm(data) {
+        const lgs = Object.keys(data.i18n || { id: {} }),
+          cl = window.currentVisualLang;
+        document.getElementById("visual-editor").innerHTML = `
+            <div style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; align-items:center">
+                <div style="display:flex; gap:5px">
+                    <button onclick="showTab('profile')" class="tab-btn active" data-tab="profile">General</button>
+                    <button onclick="showTab('projects')" class="tab-btn" data-tab="projects">Projects</button>
+                    <button onclick="showTab('langs')" class="tab-btn" data-tab="langs">Texts</button>
+                    <button onclick="showTab('socials')" class="tab-btn" data-tab="socials">Socials</button>
+                </div>
+                <div class="lang-switcher">${lgs.map((l) => `<button onclick="setVisualLang('${l}')" class="lang-btn ${l === cl ? "active" : ""}">${l.toUpperCase()}</button>`).join("")}</div>
+            </div>
+            <div id="tab-profile" class="tab-content" style="padding:20px">
+                <div class="v-group"><label class="v-label">Title</label><input class="v-input" oninput="updateVisualData('profile.title', this.value)" value="${data.profile.title}"></div>
+                <div class="v-group"><label class="v-label">Availability</label><input class="v-input" oninput="updateVisualData('profile.availability', this.value)" value="${data.profile.availability}"></div>
+                <div class="v-group"><label class="v-label">Rate (${cl})</label><input class="v-input" oninput="updateVisualData('rates.${cl}.amount', this.value)" value="${data.rates[cl]?.amount || ""}"></div>
+            </div>
+            <div id="tab-projects" class="tab-content" style="display:none; padding:20px">
+                ${["products", "websites", "side", "themes", "cyber"]
+                  .map(
+                    (k) => `
+                    <h3 class="v-label" style="margin-top:20px">${k}</h3>
+                    ${(data[k] || [])
+                      .map(
+                        (p, i) => `
+                        <div class="card">
+                            <div class="card-header" onclick="this.parentElement.classList.toggle('expanded')"><span>${p.name || "Untitled"}</span><button onclick="event.stopPropagation(); deleteItem('${k}',${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:16px">&times;</button></div>
+                            <div class="card-body">
+                                <label class="v-label">Name</label><input class="v-input" oninput="updateVisualData('${k}.${i}.name', this.value)" value="${p.name || ""}">
+                                <label class="v-label">Category</label><input class="v-input" oninput="updateVisualData('${k}.${i}.category', this.value)" value="${p.category || ""}">
+                                <label class="v-label">Desc (${cl})</label><textarea class="v-input" oninput="updateVisualData('${k}.${i}.desc.${cl}', this.value)">${p.desc?.[cl] || ""}</textarea>
+                                <label class="v-label">Media URL</label><input class="v-input" oninput="updateVisualData('${k}.${i}.media.src', this.value)" value="${p.media?.src || ""}">
+                                <label class="v-label">Button Link</label><input class="v-input" oninput="updateVisualData('${k}.${i}.url', this.value)" value="${p.url || ""}">
+                            </div>
+                        </div>
+                    `,
+                      )
+                      .join(
+                        "",
+                      )}<button onclick="addItem('${k}')" class="v-input" style="border:1px dashed var(--border); cursor:pointer">+ Tambah ke ${k}</button>
+                `,
+                  )
+                  .join("")}
+            </div>
+            <div id="tab-langs" class="tab-content" style="display:none; padding:20px">${Object.keys(
+              data.i18n[cl],
+            )
+              .map(
+                (k) => `
+                <div class="v-group">
+                    <label class="v-label">${k.replace(/_/g, " ")}</label>
+                    <textarea class="v-input" oninput="updateVisualData('i18n.${cl}.${k}', this.value)">${data.i18n[cl][k]}</textarea>
+                </div>
+            `,
+              )
+              .join("")}</div>
+            <div id="tab-socials" class="tab-content" style="display:none; padding:20px">${(
+              data.socials || []
+            )
+              .map(
+                (s, i) => `
+                <div style="display:flex; gap:10px; margin-bottom:10px">
+                    <input class="v-input" oninput="updateVisualData('socials.${i}.label', this.value)" value="${s.label}">
+                    <input class="v-input" oninput="updateVisualData('socials.${i}.url', this.value)" value="${s.url}">
+                    <button onclick="deleteItem('socials',${i})" style="width:auto; padding:0 15px; background:none; border:1px solid var(--border); color:red; border-radius:8px">&times;</button>
+                </div>
+            `,
+              )
+              .join(
+                "",
+              )}<button onclick="addItem('socials')" class="v-input">+ Tambah Social</button></div>
+          `;
+      }
+      function updateVisualData(path, val) {
+        const p = path.split(".");
+        let o = window.currentVisualData;
+        for (let i = 0; i < p.length - 1; i++) {
+          if (!o[p[i]]) o[p[i]] = {};
+          o = o[p[i]];
+        }
+        o[p[p.length - 1]] = val;
+        syncVisualToCode();
+      }
+      function syncVisualToCode() {
+        const json = JSON.stringify(window.currentVisualData, null, 2);
+        document.getElementById("code-editor").value =
+          `/* CMS VISUAL DATA */\nwindow.INDWAY_DATA = ${json};`;
+        autosave();
+      }
+      function addItem(k) {
+        const lgs = Object.keys(window.currentVisualData.i18n || { id: {} });
+        const d = {};
+        lgs.forEach((l) => (d[l] = ""));
+        const it =
+          k === "socials"
+            ? { label: "New Link", url: "#" }
+            : {
+                name: "New Project",
+                category: "General",
+                desc: d,
+                media: { type: "img", src: "" },
+                url: "",
+              };
+        if (!window.currentVisualData[k]) window.currentVisualData[k] = [];
+        window.currentVisualData[k].unshift(it);
+        renderVisualForm(window.currentVisualData);
+        syncVisualToCode();
+      }
+      function deleteItem(k, i) {
+        if (confirm("Hapus item?")) {
+          window.currentVisualData[k].splice(i, 1);
+          renderVisualForm(window.currentVisualData);
+          syncVisualToCode();
+        }
+      }
+
+      // --- API CORE ---
+      async function ghFetch(p, opt = {}) {
+        const ts = new Date().getTime();
+        const separator = p.includes('?') ? '&' : '?';
+        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${p}${separator}t=${ts}`;
+        const res = await fetch(url, {
+          ...opt,
+          headers: {
+            Authorization: `token ${config.token}`,
+            Accept: "application/vnd.github.v3+json",
+            ...opt.headers,
+          },
+        });
+        if (res.status === 401) {
+          localStorage.removeItem("lab_cms");
+          location.reload();
+        }
+        return res.json();
+      }
       function login() {
-        const inputToken = document.getElementById("token").value.trim();
-        const vault = JSON.parse(localStorage.getItem('lab_vault') || '{}');
-        
-        // Resolve Alias or use raw token
-        config.token = vault[inputToken] || inputToken;
+        const t = document.getElementById("token").value.trim(),
+          v = JSON.parse(localStorage.getItem("lab_vault") || "{}");
+        config.token = v[t] || t;
         config.owner = document.getElementById("owner").value;
         config.repo = "indway.github.io";
-
-        if (!config.token) return alert("Token/Katasandi required");
-
+        if (!config.token) return alert("Token diperlukan");
         localStorage.setItem("lab_cms", JSON.stringify(config));
         document.getElementById("login-overlay").style.display = "none";
         document.getElementById("buildStatus").href =
           `https://github.com/${config.owner}/${config.repo}/actions`;
         loadFileList();
       }
-
-      async function triggerWorkflow() {
-        if (!confirm("Jalankan generator manual (Sitemap, RSS, Diary)?"))
-          return;
-        document.getElementById("loading").style.display = "inline";
-
-        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/actions/workflows/generate.yml/dispatches`;
-        const res = await fetch(url, {
-          method: "POST",
-          headers: {
-            Authorization: `token ${config.token}`,
-            Accept: "application/vnd.github.v3+json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ref: "main" }),
-        });
-
-        if (res.ok) {
-          alert("Pemicu berhasil! Tunggu sekitar 1 menit untuk update data.");
-        } else {
-          const err = await res.json();
-          alert("Gagal: " + err.message);
-        }
-        document.getElementById("loading").style.display = "none";
-      }
-
-      function logout() {
-        localStorage.removeItem("lab_cms");
-        location.reload();
-      }
-
-      async function ghFetch(path, options = {}) {
-        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${path}`;
-        const res = await fetch(url, {
-          ...options,
-          headers: {
-            Authorization: `token ${config.token}`,
-            Accept: "application/vnd.github.v3+json",
-            ...options.headers,
-          },
-        });
-        if (res.status === 401) logout();
-        return res.json();
-      }
-
       async function loadFileList() {
-        const files = await ghFetch("diary");
-        const listEl = document.getElementById("file-list");
-
-        // Keep the manual entries
-        const manualHtml = `
-                <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
-                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">scripts/content.js</li>
-                <div style="padding: 10px 20px; font-size: 10px; color: var(--muted); border-bottom: 1px solid var(--border);">DIARY FILES</div>
-            `;
-
-        const diaryHtml = files
-          .filter((f) => f.name.endsWith(".md"))
-          .map(
-            (f) =>
-              `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${f.name}</li>`,
-          )
-          .join("");
-
-        listEl.innerHTML = manualHtml + diaryHtml;
-      }
-
-      async function loadFile(path) {
-        document.getElementById("loading").style.display = "inline";
         try {
-          const data = await ghFetch(path);
-
-          currentFile.path = path;
-          currentFile.sha = data.sha;
-
+          const files = await ghFetch("diary");
+          document.getElementById("file-list").innerHTML = `
+                <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
+                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? '📝 ' : ''}scripts/content.js</li>
+                <div style="padding:10px 20px; font-size:10px; color:var(--muted); border-bottom:1px solid var(--border)">DIARY FILES</div>
+                ${files
+                  .filter((f) => f.name.endsWith(".md"))
+                  .map(
+                    (f) => {
+                      const isDraft = localStorage.getItem("draft_" + f.path);
+                      return `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${isDraft ? '📝 ' : ''}${f.name}</li>`;
+                    }
+                  )
+                  .join("")}
+              `;
+              
+          // Append entirely local unsaved drafts that are not in Github API yet
+          Object.keys(localStorage).forEach(k => {
+             if (k.startsWith("draft_diary/") && k.endsWith(".md")) {
+                const path = k.replace("draft_", "");
+                // If not in the fetched files, it's completely unsaved/new
+                if (!files.some(f => f.path === path)) {
+                   const li = document.createElement("li");
+                   li.className = "file-item";
+                   li.dataset.path = path;
+                   li.textContent = `📝 [Draft] ${path.replace("diary/", "")}`;
+                   li.onclick = () => loadFile(path);
+                   if (currentFile.path === path) li.classList.add("active");
+                   document.getElementById("file-list").appendChild(li);
+                }
+             }
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      async function loadFile(p) {
+        document.getElementById("loading").style.display = "inline";
+        const draft = localStorage.getItem("draft_" + p);
+        try {
+          const res = await ghFetch(p);
+          currentFile = { path: p, sha: res.sha };
           const content = decodeURIComponent(
-            escape(window.atob(data.content.replace(/\n/g, ""))),
+            escape(window.atob(res.content.replace(/\n/g, ""))),
           );
-          document.getElementById("code-editor").value = content;
-          document.getElementById("editor-title").textContent = path;
-        } catch (err) {
-          console.error(err);
-          alert("Gagal memuat file: Pastikan file ada dan token valid.");
+          
+          document.getElementById("code-editor").value =
+            draft && draft !== content && confirm("Gunakan draf lokal?")
+              ? draft
+              : content;
+          updateDraftIndicator(!!draft && draft !== content);
+          finishLoadFile(p);
+        } catch (e) {
+          if (draft) {
+             currentFile = { path: p, sha: "" };
+             document.getElementById("code-editor").value = draft;
+             updateDraftIndicator(true);
+             finishLoadFile(p);
+          } else {
+             alert("Gagal memuat file!");
+          }
         }
         document.getElementById("loading").style.display = "none";
+      }
+      function finishLoadFile(p) {
+        document.getElementById("editor-title").textContent = p;
 
-        // Active state
+        document.getElementById("md-editor").style.display = "none";
+        document.getElementById("visual-editor").style.display = "none";
+        document.getElementById("code-editor").style.display = "none";
+
+        if (p === "scripts/content.js") setupVisualEditor();
+        else if (p.endsWith(".md")) setupMarkdownEditor();
+        else document.getElementById("code-editor").style.display = "block";
+        
         document
           .querySelectorAll(".file-item")
-          .forEach((el) => el.classList.remove("active"));
-        document
-          .querySelector(`[data-path="${path}"]`)
-          ?.classList.add("active");
-
-        // Close sidebar if mobile
-        if (window.innerWidth <= 768) toggleSidebar();
+          .forEach((el) =>
+            el.classList.toggle("active", el.dataset.path === p),
+          );
+      }
+      
+      async function deleteFile() {
+        if (!currentFile.path) return alert("Pilih file dulu");
+        if (!confirm("Hapus file ini permanen?")) return;
+        
+        document.getElementById("loading").style.display = "inline";
+        
+        const path = currentFile.path;
+        localStorage.removeItem("draft_" + path);
+        updateDraftIndicator(false);
+        
+        if (!currentFile.sha) {
+           // It was just a local unsaved draft
+           alert("Draft lokal dihapus.");
+           currentFile = { path: "", sha: "" };
+           document.getElementById("editor-title").textContent = "No file selected";
+           document.getElementById("md-editor").style.display = "none";
+           document.getElementById("code-editor").value = "";
+           loadFileList();
+        } else {
+           try {
+              const res = await fetch(
+                `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `token ${config.token}`,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    message: `Delete ${currentFile.path.split('/').pop()}`,
+                    sha: currentFile.sha,
+                  }),
+                },
+              );
+              if (res.ok) {
+                 alert("File terhapus di repository.");
+                 currentFile = { path: "", sha: "" };
+                 document.getElementById("editor-title").textContent = "No file selected";
+                 document.getElementById("md-editor").style.display = "none";
+                 document.getElementById("code-editor").value = "";
+                 if (path.endsWith(".md") || path === "scripts/content.js") {
+                    triggerWorkflow(true);
+                 }
+                 loadFileList();
+              } else {
+                 alert("Gagal menghapus di repository.");
+              }
+           } catch (e) {
+              alert(e.message);
+           }
+        }
+        document.getElementById("loading").style.display = "none";
       }
 
       async function saveFile() {
-        if (!currentFile.path) return alert("Select a file first");
-
-        const content = document.getElementById("code-editor").value;
-        const message = prompt(
-          "Commit message:",
-          `Update ${currentFile.path.split("/").pop()}`,
-        );
-        if (!message) return;
-
+        if (!currentFile.path) return alert("Pilih file dulu");
+        const msg = `Auto-update ${currentFile.path.split('/').pop()}`;
         document.getElementById("loading").style.display = "inline";
-
-        const body = {
-          message: message,
-          content: btoa(unescape(encodeURIComponent(content))),
-          sha: currentFile.sha,
-        };
-
-        const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`;
-        const res = await fetch(url, {
-          method: "PUT",
-          headers: {
-            Authorization: `token ${config.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        });
-
-        const result = await res.json();
-        if (res.ok) {
-          currentFile.sha = result.content.sha;
-          alert("Success! GitHub Action will trigger soon.");
-          loadFileList();
-        } else {
-          alert("Error: " + result.message);
+        const c = document.getElementById("code-editor").value;
+        try {
+          const res = await fetch(
+            `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `token ${config.token}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                message: msg,
+                content: btoa(unescape(encodeURIComponent(c))),
+                sha: currentFile.sha,
+              }),
+            },
+          );
+          if (res.ok) {
+            const r = await res.json();
+            currentFile.sha = r.content.sha;
+            localStorage.removeItem("draft_" + currentFile.path);
+            updateDraftIndicator(false);
+            alert("Selesai disimpan!");
+            if (
+              currentFile.path.endsWith(".md") ||
+              currentFile.path === "scripts/content.js"
+            )
+              triggerWorkflow(true);
+            loadFileList();
+          } else alert("Gagal simpan!");
+        } catch (e) {
+          alert(e.message);
         }
         document.getElementById("loading").style.display = "none";
       }
-
+      async function triggerWorkflow(silent = false) {
+        if (!silent && !confirm("Rebuild situs sekarang?")) return;
+        document.getElementById("loading").style.display = "inline";
+        try {
+          await fetch(
+            `https://api.github.com/repos/${config.owner}/${config.repo}/actions/workflows/generate.yml/dispatches`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `token ${config.token}`,
+                Accept: "application/vnd.github.v3+json",
+              },
+              body: JSON.stringify({ ref: "main" }),
+            },
+          );
+          if (!silent) alert("Generator dipicu!");
+        } catch (e) {}
+        document.getElementById("loading").style.display = "none";
+      }
       function createNewDiary() {
-        const title = prompt("Entry Title:");
-        if (!title) return;
-        const date = new Date().toISOString().split("T")[0];
-        const cleanTitle = title
-          .toLowerCase()
-          .replace(/[^a-z0-9]/g, "-")
-          .replace(/-+/g, "-");
-        const slug = cleanTitle;
-        const filename = `${slug.toUpperCase()}.md`; // Following your pattern 2042026A.md or slug.md
+        const t = prompt("Judul Diary:");
+        if (!t) return;
 
-        const template = `---
-title: "${title}"
-date: "${date}"
-excerpt: "Enter a short summary here..."
-tags: ["Lab", "Update"]
----
+        const now = new Date();
+        const d = now.getDate();
+        const m = now.getMonth() + 1;
+        const y = now.getFullYear();
+        const base = `${d}${m}${y}`;
 
-# ${title}
+        // Cari suffix (A, B, C...) dengan cek daftar file yang sudah dimuat
+        const loadedFiles = Array.from(
+          document.querySelectorAll(".file-item"),
+        ).map((el) => el.textContent.trim());
+        const alph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let suffix = "A";
+        for (let i = 0; i < alph.length; i++) {
+          if (!loadedFiles.some((f) => f.startsWith(base + alph[i]))) {
+            suffix = alph[i];
+            break;
+          }
+        }
 
-Pikiran hari ini...
-`;
-        currentFile.path = `diary/${filename}`;
-        currentFile.sha = ""; // New file has no SHA
-        document.getElementById("code-editor").value = template;
+        const filename = `${base}${suffix}.md`;
+        const dateStr = now.toISOString().split("T")[0];
+        const slug = t.toLowerCase().replace(/[^a-z0-9]/g, "-");
+
+        document.getElementById("code-editor").value =
+          `---\ntitle: "${t}"\ndate: "${dateStr}"\nslug: "${slug}"\ncategories: ["Update"]\n---\n\n# ${t}\n\nPikiran hari ini...`;
+        currentFile = { path: `diary/${filename}`, sha: "" };
         document.getElementById("editor-title").textContent =
-          `Creating: ${currentFile.path}`;
+          `Baru: ${filename}`;
+          
+        // Tambahkan ke UI file list
+        document.querySelectorAll(".file-item").forEach((el) => el.classList.remove("active"));
+        const li = document.createElement("li");
+        li.className = "file-item active";
+        li.dataset.path = currentFile.path;
+        li.textContent = `📝 [Draft] ${filename}`;
+        li.onclick = () => loadFile(currentFile.path);
+        document.getElementById("file-list").appendChild(li);
+
+        autosave();
+        setupMarkdownEditor();
       }
 
       // Init

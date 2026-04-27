@@ -300,6 +300,14 @@
         <div class="topbar-actions">
           <button
             class="btn-icon"
+            onclick="init(true)"
+            title="Refresh Content"
+            style="font-size: 15px; color: var(--muted)"
+          >
+            ↻
+          </button>
+          <button
+            class="btn-icon"
             id="themeBtn"
             title="Toggle Theme"
             style="font-size: 15px; color: var(--muted)"
@@ -393,12 +401,19 @@
       });
 
       // --- CORE LOGIC ---
-      async function init() {
+      async function init(force = false) {
         try {
-          const response = await fetch("../scripts/diary.json");
+          const url = force ? `../scripts/diary.json?t=${new Date().getTime()}` : "../scripts/diary.json";
+          const response = await fetch(url);
           const data = await response.json();
           // Sort by date descending
           diaryData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+          if (force) {
+            // Also force refresh markdown if currently viewing an entry
+            const currentSlug = window.location.pathname.split("/").filter(p => p.length > 0).pop();
+            const entry = diaryData.find(d => d.slug === currentSlug);
+            if (entry) showEntry(entry, true);
+          }
           handleRoute();
         } catch (err) {
           console.error("Gagal memuat diary:", err);
@@ -457,7 +472,7 @@
         }, 50);
       }
 
-      async function showEntry(entry) {
+      async function showEntry(entry, force = false) {
         document.getElementById("list-view").style.display = "none";
         document.getElementById("main-header").style.display = "none";
         document.getElementById("content-view").style.display = "block";
@@ -476,7 +491,8 @@
           .join("");
 
         try {
-          const response = await fetch(`../diary/${entry.slug}.md`);
+          const mdUrl = force ? `../diary/${entry.slug}.md?t=${new Date().getTime()}` : `../diary/${entry.slug}.md`;
+          const response = await fetch(mdUrl);
           const rawMarkdown = await response.text();
           const cleanMarkdown = rawMarkdown
             .replace(/^---[\s\S]*?---\n?/, "")
