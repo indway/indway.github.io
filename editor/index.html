@@ -143,6 +143,13 @@
         flex-direction: column;
         min-width: 0;
       }
+      .flex {
+        display: flex;
+        align-items: center;
+      }
+      .gap {
+        gap: 10px;
+      }
       .toolbar {
         height: 60px;
         border-bottom: 1px solid var(--border);
@@ -151,6 +158,11 @@
         justify-content: space-between;
         padding: 0 20px;
         background: var(--bg);
+        gap: 15px;
+        overflow-x: auto;
+      }
+      .toolbar::-webkit-scrollbar {
+        display: none;
       }
       #editor-title {
         font-weight: 700;
@@ -293,7 +305,16 @@
           display: block;
         }
         .toolbar {
-          padding: 0 10px;
+          padding: 15px;
+          height: auto;
+          flex-direction: column;
+          align-items: flex-start;
+          overflow-x: visible;
+        }
+        .toolbar .flex {
+          width: 100%;
+          flex-wrap: wrap;
+          gap: 10px;
         }
         #code-editor {
           padding: 20px 15px;
@@ -403,8 +424,11 @@
       .md-editor-container {
         display: none;
         height: 100%;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         background: var(--bg);
+      }
+      .md-editor-container.show-preview {
+        grid-template-columns: 1fr 1fr;
       }
       .md-writer {
         padding: 40px;
@@ -414,18 +438,46 @@
         flex-direction: column;
       }
       .md-preview {
+        display: none;
         padding: 40px;
         overflow-y: auto;
         background: var(--bg);
         font-family: "Inter", sans-serif;
         line-height: 1.8;
       }
+      .md-editor-container.show-preview .md-preview {
+        display: block;
+      }
       #diary-meta {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border);
         border-radius: 12px;
-        padding: 20px;
         margin-bottom: 30px;
+      }
+      #diary-meta summary {
+        padding: 15px 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        cursor: pointer;
+        outline: none;
+        list-style: none;
+      }
+      #diary-meta summary::-webkit-details-marker {
+        display: none;
+      }
+      #diary-meta summary::after {
+        content: '+';
+        float: right;
+        font-size: 14px;
+      }
+      #diary-meta[open] summary::after {
+        content: '-';
+      }
+      #diary-meta .fm-body {
+        padding: 0 20px 20px 20px;
+        border-top: 1px solid var(--border);
+        padding-top: 20px;
       }
       .writer-textarea {
         flex: 1;
@@ -448,6 +500,19 @@
         }
         .md-preview {
           display: none;
+        }
+        .md-writer {
+          padding: 20px;
+        }
+        #diary-meta summary {
+          padding: 12px 15px;
+        }
+        #diary-meta .fm-body {
+          padding: 0 15px 15px 15px;
+          padding-top: 15px;
+        }
+        .v-group[style*="grid-template-columns"] {
+          grid-template-columns: 1fr !important;
         }
       }
     </style>
@@ -609,10 +674,20 @@
           >
             Run Generator
           </button>
+          <button id="togglePreviewBtn" onclick="toggleMdPreview()" style="display: none; width: auto; padding: 6px 12px; font-size: 11px; background: transparent; border: 1px solid var(--border); color: var(--fg);">
+            Toggle Preview
+          </button>
           <button id="themeBtn" title="Toggle Theme">☀️</button>
           <button
             onclick="deleteFile()"
-            style="width: auto; padding: 6px 15px; font-size: 11px; background: rgba(231, 76, 60, 0.1); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.2);"
+            style="
+              width: auto;
+              padding: 6px 15px;
+              font-size: 11px;
+              background: rgba(231, 76, 60, 0.1);
+              color: #e74c3c;
+              border: 1px solid rgba(231, 76, 60, 0.2);
+            "
           >
             Delete
           </button>
@@ -636,27 +711,48 @@
         </div>
         <div id="md-editor" class="md-editor-container">
           <div class="md-writer">
-            <div id="diary-meta">
-              <div class="v-group">
-                <label class="v-label">Title</label>
-                <input class="v-input" id="fm-title" oninput="updateFM()" />
-              </div>
-              <div class="v-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                  <label class="v-label">Date</label>
-                  <input type="date" class="v-input" id="fm-date" oninput="updateFM()" />
+            <details id="diary-meta">
+              <summary>Frontmatter Metadata</summary>
+              <div class="fm-body">
+                <div class="v-group">
+                  <label class="v-label">Title</label>
+                  <input class="v-input" id="fm-title" oninput="updateFM()" />
                 </div>
-                <div>
-                  <label class="v-label">Slug</label>
-                  <input class="v-input" id="fm-slug" oninput="updateFM()" />
+                <div
+                  class="v-group"
+                  style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px"
+                >
+                  <div>
+                    <label class="v-label">Date</label>
+                    <input
+                      type="date"
+                      class="v-input"
+                      id="fm-date"
+                      oninput="updateFM()"
+                    />
+                  </div>
+                  <div>
+                    <label class="v-label">Slug</label>
+                    <input class="v-input" id="fm-slug" oninput="updateFM()" />
+                  </div>
+                </div>
+                <div class="v-group">
+                  <label class="v-label">Categories</label>
+                  <input
+                    class="v-input"
+                    id="fm-cats"
+                    oninput="updateFM()"
+                    placeholder="Update, Thoughts..."
+                  />
                 </div>
               </div>
-              <div class="v-group">
-                <label class="v-label">Categories</label>
-                <input class="v-input" id="fm-cats" oninput="updateFM()" placeholder="Update, Thoughts..." />
-              </div>
-            </div>
-            <textarea id="md-body" class="writer-textarea" placeholder="Tulis cerita hari ini..." oninput="updateFM()"></textarea>
+            </details>
+            <textarea
+              id="md-body"
+              class="writer-textarea"
+              placeholder="Tulis cerita hari ini..."
+              oninput="updateFM()"
+            ></textarea>
           </div>
           <div class="md-preview" id="md-preview"></div>
         </div>
@@ -778,11 +874,17 @@
       };
 
       // --- MARKDOWN ZEN ENGINE ---
+      function toggleMdPreview() {
+        const c = document.getElementById("md-editor");
+        c.classList.toggle("show-preview");
+      }
       function setupMarkdownEditor() {
         const mdEditor = document.getElementById("md-editor");
         mdEditor.style.display = "grid";
         document.getElementById("code-editor").style.display = "none";
         document.getElementById("visual-editor").style.display = "none";
+        const tpb = document.getElementById("togglePreviewBtn");
+        if (tpb) tpb.style.display = "inline-block";
 
         const raw = document.getElementById("code-editor").value;
         const fmMatch = raw.match(/^---\s*([\s\S]*?)---\s*([\s\S]*)$/);
@@ -969,7 +1071,7 @@
       // --- API CORE ---
       async function ghFetch(p, opt = {}) {
         const ts = new Date().getTime();
-        const separator = p.includes('?') ? '&' : '?';
+        const separator = p.includes("?") ? "&" : "?";
         const url = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${p}${separator}t=${ts}`;
         const res = await fetch(url, {
           ...opt,
@@ -1003,34 +1105,32 @@
           const files = await ghFetch("diary");
           document.getElementById("file-list").innerHTML = `
                 <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
-                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? '📝 ' : ''}scripts/content.js</li>
+                <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? "📝 " : ""}scripts/content.js</li>
                 <div style="padding:10px 20px; font-size:10px; color:var(--muted); border-bottom:1px solid var(--border)">DIARY FILES</div>
                 ${files
                   .filter((f) => f.name.endsWith(".md"))
-                  .map(
-                    (f) => {
-                      const isDraft = localStorage.getItem("draft_" + f.path);
-                      return `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${isDraft ? '📝 ' : ''}${f.name}</li>`;
-                    }
-                  )
+                  .map((f) => {
+                    const isDraft = localStorage.getItem("draft_" + f.path);
+                    return `<li class="file-item" data-path="${f.path}" onclick="loadFile('${f.path}')">${isDraft ? "📝 " : ""}${f.name}</li>`;
+                  })
                   .join("")}
               `;
-              
+
           // Append entirely local unsaved drafts that are not in Github API yet
-          Object.keys(localStorage).forEach(k => {
-             if (k.startsWith("draft_diary/") && k.endsWith(".md")) {
-                const path = k.replace("draft_", "");
-                // If not in the fetched files, it's completely unsaved/new
-                if (!files.some(f => f.path === path)) {
-                   const li = document.createElement("li");
-                   li.className = "file-item";
-                   li.dataset.path = path;
-                   li.textContent = `📝 [Draft] ${path.replace("diary/", "")}`;
-                   li.onclick = () => loadFile(path);
-                   if (currentFile.path === path) li.classList.add("active");
-                   document.getElementById("file-list").appendChild(li);
-                }
-             }
+          Object.keys(localStorage).forEach((k) => {
+            if (k.startsWith("draft_diary/") && k.endsWith(".md")) {
+              const path = k.replace("draft_", "");
+              // If not in the fetched files, it's completely unsaved/new
+              if (!files.some((f) => f.path === path)) {
+                const li = document.createElement("li");
+                li.className = "file-item";
+                li.dataset.path = path;
+                li.textContent = `📝 [Draft] ${path.replace("diary/", "")}`;
+                li.onclick = () => loadFile(path);
+                if (currentFile.path === path) li.classList.add("active");
+                document.getElementById("file-list").appendChild(li);
+              }
+            }
           });
         } catch (e) {
           console.error(e);
@@ -1045,7 +1145,7 @@
           const content = decodeURIComponent(
             escape(window.atob(res.content.replace(/\n/g, ""))),
           );
-          
+
           document.getElementById("code-editor").value =
             draft && draft !== content && confirm("Gunakan draf lokal?")
               ? draft
@@ -1054,12 +1154,12 @@
           finishLoadFile(p);
         } catch (e) {
           if (draft) {
-             currentFile = { path: p, sha: "" };
-             document.getElementById("code-editor").value = draft;
-             updateDraftIndicator(true);
-             finishLoadFile(p);
+            currentFile = { path: p, sha: "" };
+            document.getElementById("code-editor").value = draft;
+            updateDraftIndicator(true);
+            finishLoadFile(p);
           } else {
-             alert("Gagal memuat file!");
+            alert("Gagal memuat file!");
           }
         }
         document.getElementById("loading").style.display = "none";
@@ -1070,75 +1170,79 @@
         document.getElementById("md-editor").style.display = "none";
         document.getElementById("visual-editor").style.display = "none";
         document.getElementById("code-editor").style.display = "none";
+        const tpb = document.getElementById("togglePreviewBtn");
+        if (tpb) tpb.style.display = "none";
 
         if (p === "scripts/content.js") setupVisualEditor();
         else if (p.endsWith(".md")) setupMarkdownEditor();
         else document.getElementById("code-editor").style.display = "block";
-        
+
         document
           .querySelectorAll(".file-item")
           .forEach((el) =>
             el.classList.toggle("active", el.dataset.path === p),
           );
       }
-      
+
       async function deleteFile() {
         if (!currentFile.path) return alert("Pilih file dulu");
         if (!confirm("Hapus file ini permanen?")) return;
-        
+
         document.getElementById("loading").style.display = "inline";
-        
+
         const path = currentFile.path;
         localStorage.removeItem("draft_" + path);
         updateDraftIndicator(false);
-        
+
         if (!currentFile.sha) {
-           // It was just a local unsaved draft
-           alert("Draft lokal dihapus.");
-           currentFile = { path: "", sha: "" };
-           document.getElementById("editor-title").textContent = "No file selected";
-           document.getElementById("md-editor").style.display = "none";
-           document.getElementById("code-editor").value = "";
-           loadFileList();
+          // It was just a local unsaved draft
+          alert("Draft lokal dihapus.");
+          currentFile = { path: "", sha: "" };
+          document.getElementById("editor-title").textContent =
+            "No file selected";
+          document.getElementById("md-editor").style.display = "none";
+          document.getElementById("code-editor").value = "";
+          loadFileList();
         } else {
-           try {
-              const res = await fetch(
-                `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    Authorization: `token ${config.token}`,
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    message: `Delete ${currentFile.path.split('/').pop()}`,
-                    sha: currentFile.sha,
-                  }),
+          try {
+            const res = await fetch(
+              `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${currentFile.path}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `token ${config.token}`,
+                  "Content-Type": "application/json",
                 },
-              );
-              if (res.ok) {
-                 alert("File terhapus di repository.");
-                 currentFile = { path: "", sha: "" };
-                 document.getElementById("editor-title").textContent = "No file selected";
-                 document.getElementById("md-editor").style.display = "none";
-                 document.getElementById("code-editor").value = "";
-                 if (path.endsWith(".md") || path === "scripts/content.js") {
-                    triggerWorkflow(true);
-                 }
-                 loadFileList();
-              } else {
-                 alert("Gagal menghapus di repository.");
+                body: JSON.stringify({
+                  message: `Delete ${currentFile.path.split("/").pop()}`,
+                  sha: currentFile.sha,
+                }),
+              },
+            );
+            if (res.ok) {
+              alert("File terhapus di repository.");
+              currentFile = { path: "", sha: "" };
+              document.getElementById("editor-title").textContent =
+                "No file selected";
+              document.getElementById("md-editor").style.display = "none";
+              document.getElementById("code-editor").value = "";
+              if (path.endsWith(".md") || path === "scripts/content.js") {
+                triggerWorkflow(true);
               }
-           } catch (e) {
-              alert(e.message);
-           }
+              loadFileList();
+            } else {
+              alert("Gagal menghapus di repository.");
+            }
+          } catch (e) {
+            alert(e.message);
+          }
         }
         document.getElementById("loading").style.display = "none";
       }
 
       async function saveFile() {
         if (!currentFile.path) return alert("Pilih file dulu");
-        const msg = `Auto-update ${currentFile.path.split('/').pop()}`;
+        const msg = `Auto-update ${currentFile.path.split("/").pop()}`;
         document.getElementById("loading").style.display = "inline";
         const c = document.getElementById("code-editor").value;
         try {
@@ -1226,9 +1330,11 @@
         currentFile = { path: `diary/${filename}`, sha: "" };
         document.getElementById("editor-title").textContent =
           `Baru: ${filename}`;
-          
+
         // Tambahkan ke UI file list
-        document.querySelectorAll(".file-item").forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".file-item")
+          .forEach((el) => el.classList.remove("active"));
         const li = document.createElement("li");
         li.className = "file-item active";
         li.dataset.path = currentFile.path;
