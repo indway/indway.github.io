@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to the **indway** project will be documented in this file.
 
+## [1.3.0] - 2026-04-27
+### Added
+- **AI Content Generator Workflow**: Developed a CLI-based script leveraging the Gemini API to programmatically generate Markdown diary entries, steered by custom `.skills` and `.souls` system prompts.
+- **Public Repository Identity**: Restructured and translated `README.md` to English to clearly convey the lab's pragmatic, anti-perfectionism philosophy.
+
+### Changed
+- **Frontmatter Parsing**: Improved custom parser in `generate-diary.js` to automatically strip quotation marks from YAML frontmatter strings.
+- **Data Standardization**: Standardized all `diary/*.md` frontmatters for cleaner parsing pipeline.
+
 ## [1.2.0] - 2026-04-27
 ### Added
 - **indway GitCMS (v1.0)**: A custom, browser-based editor at `/editor` to manage diary entries and `content.js` via the GitHub API. Features secure token-based access and direct commit workflow.

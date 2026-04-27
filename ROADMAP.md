@@ -5,6 +5,7 @@ The vision for indway is to become a high-impact, AI-driven personal hub.
 - [x] **Redirection Mastery**: Implement `404.html` fallback for GitHub Pages to support clean URLs on refresh.
 - [x] **SEO Boost**: Complete OpenGraph and Twitter Card meta tags for every diary entry.
 - [x] **RSS Feed**: Add `scripts/generate-rss.js` to enable followers via RSS/Feedly. 
+- [x] **AI-Powered Workflows**: Build custom CLI scripts (`generate-content.js` + `.souls` / `.skills`) for automated, style-consistent content rendering.
 
 ## Phase 2: Professional Showcase (Q3 2026)
 - [ ] **Behance-Style Case Studies**: Expand product modals to include a "Process" section (Challenge > Solution > Result).

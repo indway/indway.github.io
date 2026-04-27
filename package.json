@@ -7,9 +7,14 @@
     "sitemap": "node scripts/generate-sitemap.js",
     "llms": "node scripts/generate-llms.js",
     "diary": "node scripts/generate-diary.js",
-    "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js"
+    "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js",
+    "generate:content": "node scripts/generate-ai-content.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.4.2"
+  }
 }
