@@ -610,6 +610,16 @@
           &times;
         </button>
       </div>
+      <div style="padding: 10px 15px; border-bottom: 1px solid var(--border)">
+        <input
+          type="text"
+          id="fileSearch"
+          class="v-input"
+          placeholder="Cari diary..."
+          style="margin-bottom: 0;"
+          onkeyup="filterFiles()"
+        />
+      </div>
       <ul class="file-list" id="file-list">
         <li class="file-item" onclick="createNewDiary()">
           [+] New Diary Entry
@@ -1100,9 +1110,26 @@
           `https://github.com/${config.owner}/${config.repo}/actions`;
         loadFileList();
       }
+      function filterFiles() {
+        const q = document.getElementById("fileSearch").value.toLowerCase();
+        const items = document.querySelectorAll("#file-list .file-item");
+        items.forEach((el) => {
+          if (el.textContent.toLowerCase().includes(q)) {
+            el.style.display = "block";
+          } else {
+            el.style.display = "none";
+          }
+        });
+      }
+
       async function loadFileList() {
         try {
-          const files = await ghFetch("diary");
+          let files = await ghFetch("diary");
+          if (Array.isArray(files)) {
+            files.sort((a, b) => b.name.localeCompare(a.name));
+          } else {
+            files = [];
+          }
           document.getElementById("file-list").innerHTML = `
                 <li class="file-item" onclick="createNewDiary()">[+] New Diary Entry</li>
                 <li class="file-item" data-path="scripts/content.js" onclick="loadFile('scripts/content.js')">${localStorage.getItem("draft_scripts/content.js") ? "📝 " : ""}scripts/content.js</li>
