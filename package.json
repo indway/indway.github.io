@@ -5,9 +5,9 @@
   "main": "scripts/generate-sitemap.js",
   "scripts": {
     "sitemap": "node scripts/generate-sitemap.js",
-    "llms": "node scripts/generate-llms.js",
+    "llms": "node scripts/generate-llms.js --full",
     "diary": "node scripts/generate-diary.js",
-    "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js",
+    "generate": "node scripts/generate-diary.js && node scripts/generate-rss.js && node scripts/generate-sitemap.js && node scripts/generate-llms.js --full",
     "generate:content": "node scripts/generate-content.js"
   },
   "keywords": [],
