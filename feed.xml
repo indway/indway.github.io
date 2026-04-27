@@ -5,22 +5,22 @@
     <link>https://indway.github.io/diary/</link>
     <description>Catatan Perjalanan Hidup dan Eksperimen Lab indway</description>
     <language>id-id</language>
-    <lastBuildDate>Mon, 27 Apr 2026 06:49:11 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 27 Apr 2026 07:30:46 GMT</lastBuildDate>
     <atom:link href="https://indway.github.io/feed.xml" rel="self" type="application/rss+xml" />
 
     <item>
-        <title><![CDATA["Website Indway ini update pendekatan baru"]]></title>
+        <title><![CDATA[Website Indway ini update pendekatan baru]]></title>
         <link>https://indway.github.io/diary/2742026A</link>
         <guid isPermaLink="true">https://indway.github.io/diary/2742026A</guid>
         <pubDate>Mon, 27 Apr 2026 00:00:00 GMT</pubDate>
-        <description><![CDATA[ya kemarin saya ada kembangkan sebuah pendekatan baru bagi saya dalam pengembangan CMS, dengan git-based style. kenapa pendekatan ini menarik? Ya saya pakai untuk website sekolah awalnya saya setup de...]]></description>
+        <description><![CDATA[Pendekatan baru dalam pengembangan CMS dengan gaya berbasis git (JadiCMS).]]></description>
     </item>
     <item>
-        <title><![CDATA["Pendekatan Heuristik Bias Pada Konten"]]></title>
+        <title><![CDATA[Pendekatan Heuristik Bias Pada Konten]]></title>
         <link>https://indway.github.io/diary/2142026A</link>
         <guid isPermaLink="true">https://indway.github.io/diary/2142026A</guid>
         <pubDate>Tue, 21 Apr 2026 00:00:00 GMT</pubDate>
-        <description><![CDATA[Ada banyak orang yang tertipu dengan daya tipu bahasanya ada teknik yang kita kenal "Heuristik Bias" Heuristik bias adalah jalan pintas mental (aturan praktis) yang digunakan otak untuk mengambil kepu...]]></description>
+        <description><![CDATA[Heuristik bias adalah jalan pintas mental (aturan praktis) yang digunakan otak untuk mengambil keputusan atau penilaian dengan cepat.]]></description>
     </item>
     <item>
         <title><![CDATA[Memulai Langkah Baru]]></title>

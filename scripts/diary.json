@@ -1,17 +1,25 @@
 [
   {
     "slug": "2742026A",
-    "title": "\"Website Indway ini update pendekatan baru\"",
-    "excerpt": "ya kemarin saya ada kembangkan sebuah pendekatan baru bagi saya dalam pengembangan CMS, dengan git-based style. kenapa pendekatan ini menarik? Ya saya pakai untuk website sekolah awalnya saya setup de...",
-    "date": "\"2026-04-27\"",
-    "tags": []
+    "title": "Website Indway ini update pendekatan baru",
+    "excerpt": "Pendekatan baru dalam pengembangan CMS dengan gaya berbasis git (JadiCMS).",
+    "date": "2026-04-27",
+    "tags": [
+      "update",
+      "indway",
+      "web"
+    ]
   },
   {
     "slug": "2142026A",
-    "title": "\"Pendekatan Heuristik Bias Pada Konten\"",
-    "excerpt": "Ada banyak orang yang tertipu dengan daya tipu bahasanya ada teknik yang kita kenal \"Heuristik Bias\" Heuristik bias adalah jalan pintas mental (aturan praktis) yang digunakan otak untuk mengambil kepu...",
-    "date": "\"2026-04-21\"",
-    "tags": []
+    "title": "Pendekatan Heuristik Bias Pada Konten",
+    "excerpt": "Heuristik bias adalah jalan pintas mental (aturan praktis) yang digunakan otak untuk mengambil keputusan atau penilaian dengan cepat.",
+    "date": "2026-04-21",
+    "tags": [
+      "review",
+      "content",
+      "ai"
+    ]
   },
   {
     "slug": "2042026A",

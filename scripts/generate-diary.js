@@ -25,7 +25,11 @@ function parseFrontmatter(content) {
         fmText.split('\n').forEach(line => {
             const [key, ...valueParts] = line.split(':');
             if (key && valueParts.length > 0) {
-                metadata[key.trim()] = valueParts.join(':').trim();
+                let val = valueParts.join(':').trim();
+                if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+                    val = val.substring(1, val.length - 1);
+                }
+                metadata[key.trim()] = val;
             }
         });
     }
