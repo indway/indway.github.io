@@ -409,7 +409,11 @@
 
       function handleRoute() {
         const path = window.location.pathname;
-        const slug = path
+        const params = new URLSearchParams(window.location.search);
+        
+        // Priority 1: Query param 'p' (from 404 redirect)
+        // Priority 2: Direct path slug
+        const slug = params.get('p') || path
           .split("/")
           .filter((p) => p.length > 0)
           .pop();
